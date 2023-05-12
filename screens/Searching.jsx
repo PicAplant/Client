@@ -38,7 +38,7 @@ export default function Searching(props) {
 
   return (
 <View
- style={{width:"100%"}}>
+ style={{width:"100%",paddingBottom:20}}>
     <TextInput style={styles.autocomplete}
       placeholder="חפש צמח"
       value={input}
