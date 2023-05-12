@@ -3,6 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import styles from "../App.module.js";
 import QuizScreen from "../screens/QuizScreen";
 import { useNavigation } from "@react-navigation/native";
+import Search from "../screens/SearchingPage.jsx"; //new
 
 export default function NavBar(props) {
   const ForumIcon = require("../assets/Icon_navbar_forums.png");
@@ -24,12 +25,25 @@ export default function NavBar(props) {
           navigation.navigate("QuizScreen", {
             userID: props.userID,
             isExpert: props.isExpert,
+
           })
         }
       >
         <Image style={styles.icon} source={triviaIcon} />
       </TouchableOpacity>
+
+
+      <TouchableOpacity //new
+        onPress={() =>
+          navigation.navigate("SearchingPage", {
+            userID: props.userID,
+            isExpert: props.isExpert,
+          })
+        }
+      >
       <Image style={styles.icon} source={SearchIcon} />
+      </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("Identify", {

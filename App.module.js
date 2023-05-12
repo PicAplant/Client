@@ -68,7 +68,7 @@ export default StyleSheet.create({
     borderRadius: 15,
     fontSize: 16,
     marginBottom: 25,
-    textAlign:'center'
+    textAlign:'center',
   },
   back: {
     position: "absolute",
@@ -133,6 +133,7 @@ export default StyleSheet.create({
     top: 0,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+    flex: 1,
   },
   logout: {
     position: "absolute",
@@ -180,4 +181,53 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  
+  pressable: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems:"center",
+    padding:23,
+    borderColor:"#000",
+    lineHight:1,
+    borderBottomWidth:0.2,
+    margin:2,
+    backgroundColor:"#cccccc50",
+    borderRadius:20
+
+  },
+  flatList: {
+    fontSize: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    margin: 2,
+    marginBottom:100
+
+  },
+  infoText: {
+    textAlign: 'center',
+    fontSize: 16,
+  },  
+  autocomplete: {
+  alignSelf: "stretch",
+  height: 50,
+  margin: 20,
+  backgroundColor: "#76937B55",
+  borderColor: "lightblue",
+  borderWidth: 1,
+  textAlign:"center",
+  borderRadius:20
+
+  },
+  plantInfo:{
+alignItems:"right",
+justifyContent:"center",
+borderRadius:20,
+borderColor:"#000",
+borderWidth:1,
+margin:20,
+width:"90%",
+padding:5,
+maxWidth:"90%",
+scrollX:false
+}
 });
