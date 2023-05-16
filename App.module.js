@@ -219,7 +219,7 @@ export default StyleSheet.create({
 
   },
   plantInfo:{
-alignItems:"right",
+alignItems:"baseline",
 justifyContent:"center",
 borderRadius:20,
 borderColor:"#000",
