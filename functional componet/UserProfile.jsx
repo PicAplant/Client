@@ -2,34 +2,22 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import {
-  SafeAreaView,
   KeyboardAvoidingView,
   Image,
   ImageBackground,
-  ScrollView,
-  Button,
-  StyleSheet,
   Text,
   View,
-  TextInput,
   TouchableOpacity,
-  Alert,
   TouchableHighlight,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import styles from "../App.module.js";
-import Login from "./LogIn";
 import * as ImagePicker from "expo-image-picker";
-import UserIdentification from "./UserIdentification";
 import { StackActions } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
 import NavBar from "./navBar";
-import axios from "axios";
-
 export default function UserProfile({ route, navigation }) {
   //  let user=route.params;
   const BackGroundImageLocal = require("../assets/bg_userProfile.png");
-  const profile = require("../assets/profilePhoto.jpg");
   const HomePageIcon = require("../assets/logo_without_title.png");
   const ForumIcon = require("../assets/Icon_navbar_forums.png");
   const ShopIcon = require("../assets/Shop_icon.png");

@@ -228,6 +228,6 @@ margin:20,
 width:"90%",
 padding:5,
 maxWidth:"90%",
-scrollX:false
+scrollX:false,
 }
 });
