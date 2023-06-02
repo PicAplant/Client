@@ -25,13 +25,11 @@ export default function NavBar(props) {
           navigation.navigate("QuizScreen", {
             userID: props.userID,
             isExpert: props.isExpert,
-
           })
         }
       >
         <Image style={styles.icon} source={triviaIcon} />
       </TouchableOpacity>
-
 
       <TouchableOpacity //new
         onPress={() =>
@@ -41,7 +39,7 @@ export default function NavBar(props) {
           })
         }
       >
-      <Image style={styles.icon} source={SearchIcon} />
+        <Image style={styles.icon} source={SearchIcon} />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -54,7 +52,17 @@ export default function NavBar(props) {
       >
         <Image style={styles.icon} source={HomePageIcon} />
       </TouchableOpacity>
-      <Image style={styles.icon} source={ForumIcon} />
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ForumMain", {
+            userID: props.userID,
+            isExpert: props.isExpert,
+          })
+        }
+      >
+        <Image style={styles.icon} source={ForumIcon} />
+      </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("UserProfile", {

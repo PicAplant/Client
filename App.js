@@ -29,6 +29,7 @@ import UserSettings from "./functional componet/UserSettings";
 import * as Notifications from "expo-notifications";
 import SearchingPage from "./screens/SearchingPage";
 import SearchResults from "./screens/SearchResults";
+import ForumMain from "./screens/ForumMain";
 I18nManager.forceRTL(true);
 I18nManager.allowRTL(true);
 //web:222431351949-u9t6ooea1k530kli2d6tiqbk6cndm78n.apps.googleusercontent.com
@@ -100,6 +101,11 @@ export default function App() {
           component={QuizScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="ForumMain"
+          component={ForumMain}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="NavBar" component={NavBar} />
         <Stack.Screen
           name="Quizquest"
@@ -157,12 +163,12 @@ export default function App() {
           component={UserSettings}
           options={{ headerShown: false }}
         />
-                <Stack.Screen //new
+        <Stack.Screen //new
           name="SearchingPage"
           component={SearchingPage}
           options={{ headerShown: false }}
         />
-                <Stack.Screen //new
+        <Stack.Screen //new
           name="SearchResults"
           component={SearchResults}
           options={{ headerShown: false }}
