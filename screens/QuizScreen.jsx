@@ -114,7 +114,7 @@ export default function QuizScreen({ navigation,route }) {
           </View>
         </View>
       </ImageBackground>
-      <NavBar isExpert={route.params.isExpert} userID={userId}/>
+      <NavBar isExpert={route.params.isExpert} userID={route.params.userID}/>
     </View>
   );
 }
