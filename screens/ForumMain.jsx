@@ -6,18 +6,31 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  PermissionsAndroid,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import bg from "../assets/ForumsBG.png";
 import NavBar from "../functional componet/navBar";
-import point from '../assets/point.png';
-import check from '../assets/check.png';
+import point from "../assets/point.png";
+import check from "../assets/check.png";
+import galleryIcon from "../assets/Icon_gallery.png";
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
 
 export default function ForumMain({ navigation, route }) {
   const [ForumsList, setForumsList] = useState(0);
+  const [Modal, setModal] = useState(false);
+  const [modalwindow, setmodalwindow] = useState("");
+  const [SelectedImage, setSelectedImage] = useState(null);
+  const [NameInput, setNameInput] = useState("");
+  const [DiscInput, setDiscInput] = useState("");
+  const [render, setrender] = useState(false);
+
   console.log("Forum Main Route --->", route.params);
   const api = `https://proj.ruppin.ac.il/cgroup41/prod/api/SocialForums/GetForumsById&Follow?userID=${route.params.userID}`;
   let RenderCompenent = 0;
+  let profilePhotoURI = "";
   const prefixPhoto = "https://proj.ruppin.ac.il/cgroup41/prod/uploadedFiles/";
 
   useEffect(() => {
@@ -48,11 +61,167 @@ export default function ForumMain({ navigation, route }) {
     };
   }, []);
 
+  const uploadFile = () => {
+    setUploded(true);
+    const api = `https://proj.ruppin.ac.il/cgroup41/prod/api/Upload`;
+    const formData = new FormData();
+    formData.append("files", {
+      uri: selectedImage,
+      type: "image/png",
+      name: `${selectedImage.split("/").pop()}`,
+    });
+
+    fetch(api, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => {
+        //console.log("response= ", JSON.stringify(response));
+        return response.json();
+      })
+      .then(
+        (result) => {
+          //console.log("fetch POST= ", JSON.stringify(result));
+          setPath(JSON.stringify(result).split("/").pop());
+        },
+        (error) => {
+          console.log("err post=", error);
+        }
+      );
+  };
+
+  // //   //upload image function from gallery/camera
+  const pickImage = async (from) => {
+    let settings = {
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    };
+    let result =
+      from === "gallery"
+        ? await ImagePicker.launchImageLibraryAsync(settings)
+        : from === "camera"
+        ? await ImagePicker.launchCameraAsync(settings)
+        : "";
+
+    if (!result.cancelled) {
+      // console.log("result--- ", result);
+      setSelectedImage(result.assets[0].uri);
+      return result.assets[0].uri;
+    }
+  };
+
+  const pickImageDor = async () => {
+    let uriName;
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    uriName = result.assets[0].uri;
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+    }
+    let uriNameToUp = uriName;
+    uriName = uriName.split("ImagePicker");
+    uriName = uriName[1].split("/");
+    uriName = uriName[1].split(".");
+
+    console.log("109 ", uriName[0]);
+    profilePhotoURI = uriName[0];
+    const formData = new FormData();
+    formData.append("files", {
+      uri: uriNameToUp,
+      type: "image/png",
+      name: `${uriName[0]}.png`,
+    });
+
+    fetch(apiUrl, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => {
+        console.log("response= ", JSON.stringify(response));
+        return response.json();
+      })
+      .then(
+        (result) => {
+          console.log(
+            "fetch POST--->Upload Photo respon ---->= ",
+            JSON.stringify(result)
+          );
+        },
+        (error) => {
+          console.log("err post in upload photo fetch=", error);
+        }
+      );
+    let d = new Date();
+
+    const s = {
+      PhotoUri: profilePhotoURI,
+      PhotoTimestamp: 0,
+      PostId: 0,
+      UserId: route.params.userID,
+      Latitude: 0,
+      Longitude: 0,
+      PhotoTimestamp:
+        d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear(),
+    };
+
+    fetch(apiUrlinsert, {
+      method: "POST",
+      body: JSON.stringify(s),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+        Accept: "application/json; charset=UTF-8",
+      }),
+    })
+      .then((response) => {
+        console.log("res=", JSON.stringify(response));
+        return response.json();
+      })
+      .then(
+        (result) => {
+          let GetUser = JSON.stringify(result);
+          if (GetUser != "") {
+            console.log("fetch POST= ", JSON.stringify(result));
+          }
+        },
+        (error) => {
+          console.log("err post=", JSON.stringify(error));
+        }
+      );
+  };
+
+  const handleSelectImage = async (from) => {
+    const uri = await pickImage(from);
+    if (uri) {
+      setSelectedImage(uri);
+    }
+  };
+  const CreateForum = () => {
+    console.log("Create Forum !!!!");
+  };
+
   if (ForumsList != 0) {
     RenderCompenent = ForumsList.map((forum, index) => {
       return (
         <View key={forum.socialForumId} style={styles.ForumCard}>
-          {forum.follow=='yes'?<Image style={styles.iconFollow} source={check}/>:''}
+          {forum.follow == "yes" ? (
+            <Image style={styles.iconFollow} source={check} />
+          ) : (
+            ""
+          )}
           <View style={styles.imgView}>
             <Image
               source={{
@@ -69,9 +238,15 @@ export default function ForumMain({ navigation, route }) {
             </Text>
           </View>
           <View style={styles.btnWrap}>
-            <TouchableOpacity onPress={()=>{
-              navigation.navigate('ForumPage',{user:route.params,forum:forum})
-            }} style={styles.btn}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("ForumPage", {
+                  user: route.params,
+                  forum: forum,
+                });
+              }}
+              style={styles.btn}
+            >
               <Text style={styles.txtbtn}>הכניסה מכאן</Text>
               <Image style={styles.iconbtn} source={point} />
             </TouchableOpacity>
@@ -87,6 +262,58 @@ export default function ForumMain({ navigation, route }) {
         style={{ width: "100%", height: "100%", zIndex: -1 }}
         source={bg}
       >
+        {Modal === true ? modalwindow : ""}
+        <TouchableOpacity
+          style={styles.btnadd}
+          onPress={() => {
+            setModal((prev) => !prev);
+            setmodalwindow(
+              <View style={styles.modal}>
+                <Text style={styles.titleModal}>יצירת פורום חדש</Text>
+
+                {SelectedImage == null ? (
+                  <TouchableOpacity
+                    style={styles.galleryButton}
+                    title="Pick an image from camera roll"
+                    onPress={() => {
+                      handleSelectImage("gallery");
+                    }}
+                  >
+                    <Image
+                      source={galleryIcon}
+                      style={styles.galleryIcon}
+                    ></Image>
+                  </TouchableOpacity>
+                ) : (
+                  <Image
+                    style={{ width: 95, height: 95, borderRadius: 95 }}
+                    source={{ uri: SelectedImage }}
+                  />
+                )}
+                <TextInput
+                  onChangeText={(name) => setNameInput(name)}
+                  style={styles.input}
+                  placeholder="בחר שם לפורום"
+                />
+                <TextInput
+                  onChangeText={(name) => setNameInput(name)}
+                  style={styles.input}
+                  placeholder="תיאור הפורום בקצרה"
+                />
+                <TouchableOpacity
+                  onPress={() => {
+                    CreateForum();
+                  }}
+                  style={styles.btn2}
+                >
+                  <Text style={styles.txtbtn2}>צור פורום חדש</Text>
+                </TouchableOpacity>
+              </View>
+            );
+          }}
+        >
+          <Text style={styles.btntitle}>{Modal === true ? "X" : "+"}</Text>
+        </TouchableOpacity>
         <View style={styles.con}>
           <ScrollView style={styles.scrolView}>
             {RenderCompenent != 0 ? RenderCompenent : <Text>Loading...</Text>}
@@ -112,9 +339,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 45,
   },
   con: {
-    marginTop: 75,
+    marginTop: 5,
     // marginHorizontal: 15,
-    marginBottom: 50,
+    marginBottom: 150,
   },
   ForumCard: {
     backgroundColor: "#EBFDEB75",
@@ -169,6 +396,27 @@ const styles = StyleSheet.create({
     position: "relative",
     top: 5,
   },
+  galleryButton: {
+    width: 100,
+    height: 100,
+    padding: 10,
+    borderRadius: 150,
+    backgroundColor: "#9EB98B",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 4,
+    borderColor: "#000",
+  },
+  galleryIcon: {
+    width: "80%",
+    height: "80%",
+    marginRight: 0,
+    borderRadius: 0,
+    textAlign: "center",
+    justifyContent: "center",
+    position: "absolute",
+  },
   activtxt: {
     fontSize: 12,
     marginRight: 15,
@@ -178,36 +426,96 @@ const styles = StyleSheet.create({
   btnWrap: {
     // borderWidth: 2,
     // borderColor: "#000",
-    alignItems:'center',
-    marginVertical:10,
+    alignItems: "center",
+    marginVertical: 10,
   },
   btn: {
     borderColor: "#3F493A",
-    borderWidth:1,
+    borderWidth: 1,
     backgroundColor: "#9EB98B75",
-    opacity:0.8,
-    width:200,
-    paddingVertical:10,
-    borderRadius:15,
-
+    opacity: 0.8,
+    width: 200,
+    paddingVertical: 10,
+    borderRadius: 15,
   },
-  txtbtn:{
-    fontSize:18,
-    textAlign:'center'
+  btn2: {
+    borderColor: "#9EB98B75",
+    borderWidth: 1,
+    backgroundColor: "#3F493A",
+    opacity: 0.8,
+    width: 300,
+    paddingVertical: 10,
+    borderRadius: 25,
   },
-  iconbtn:{
-    width:25,
-    height:25,
-    position:'absolute',
-    top:11,
-    left:13,
+  txtbtn: {
+    fontSize: 18,
+    textAlign: "center",
   },
-  iconFollow:{
-    width:25,
-    height:25,
-    position:'absolute',
-    right:15,
-    top:10,
-
-  }
+  txtbtn2: {
+    fontSize: 18,
+    textAlign: "center",
+    color: "#fff",
+  },
+  modal: {
+    position: "absolute",
+    top: 100,
+    left: 18,
+    width: 325,
+    height: 450,
+    backgroundColor: "#9EB98B",
+    zIndex: 5,
+    borderRadius: 25,
+    alignItems: "center",
+  },
+  input: {
+    borderWidth: 2,
+    padding: 5,
+    paddingLeft: 63,
+    fontSize: 18,
+    textAlign: "right",
+    margin: 10,
+    backgroundColor: "#ffffff80",
+    marginBottom: 15,
+    borderRadius: 22,
+    width: 300,
+    height: 50,
+  },
+  iconbtn: {
+    width: 25,
+    height: 25,
+    position: "absolute",
+    top: 11,
+    left: 13,
+  },
+  iconFollow: {
+    width: 25,
+    height: 25,
+    position: "absolute",
+    right: 15,
+    top: 10,
+  },
+  btnadd: {
+    backgroundColor: "#3F493A",
+    width: 45,
+    height: 45,
+    borderRadius: 100,
+    marginTop: 35,
+    position: "relative",
+    top: 15,
+    left: 285,
+    marginBottom: 15,
+  },
+  btntitle: {
+    fontSize: 35,
+    color: "#fff",
+    textAlign: "center",
+    marginHorizontal: 5,
+    marginTop: -2,
+  },
+  titleModal: {
+    fontSize: 25,
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center",
+  },
 });
