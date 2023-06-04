@@ -10,6 +10,8 @@ import {
 import React, { useEffect, useState } from "react";
 import bg from "../assets/ForumsBG.png";
 import NavBar from "../functional componet/navBar";
+import point from '../assets/point.png';
+import check from '../assets/check.png';
 
 export default function ForumMain({ navigation, route }) {
   const [ForumsList, setForumsList] = useState(0);
@@ -48,9 +50,9 @@ export default function ForumMain({ navigation, route }) {
 
   if (ForumsList != 0) {
     RenderCompenent = ForumsList.map((forum, index) => {
-      console.log("One forum--->", forum, index);
       return (
         <View key={forum.socialForumId} style={styles.ForumCard}>
+          {forum.follow=='yes'?<Image style={styles.iconFollow} source={check}/>:''}
           <View style={styles.imgView}>
             <Image
               source={{
@@ -67,8 +69,11 @@ export default function ForumMain({ navigation, route }) {
             </Text>
           </View>
           <View style={styles.btnWrap}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity onPress={()=>{
+              navigation.navigate('ForumPage',{user:route.params,forum:forum})
+            }} style={styles.btn}>
               <Text style={styles.txtbtn}>הכניסה מכאן</Text>
+              <Image style={styles.iconbtn} source={point} />
             </TouchableOpacity>
           </View>
         </View>
@@ -181,7 +186,7 @@ const styles = StyleSheet.create({
     borderWidth:1,
     backgroundColor: "#9EB98B75",
     opacity:0.8,
-    width:190,
+    width:200,
     paddingVertical:10,
     borderRadius:15,
 
@@ -189,5 +194,20 @@ const styles = StyleSheet.create({
   txtbtn:{
     fontSize:18,
     textAlign:'center'
+  },
+  iconbtn:{
+    width:25,
+    height:25,
+    position:'absolute',
+    top:11,
+    left:13,
+  },
+  iconFollow:{
+    width:25,
+    height:25,
+    position:'absolute',
+    right:15,
+    top:10,
+
   }
 });
