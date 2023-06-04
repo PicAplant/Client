@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import bg from "../assets/ForumsBG.png";
@@ -47,23 +48,28 @@ export default function ForumMain({ navigation, route }) {
 
   if (ForumsList != 0) {
     RenderCompenent = ForumsList.map((forum, index) => {
+      console.log("One forum--->", forum, index);
       return (
-        <View key={index} style={styles.ForumCard}>
+        <View key={forum.socialForumId} style={styles.ForumCard}>
           <View style={styles.imgView}>
             <Image
-              style={styles.img}
               source={{
-                uri: prefixPhoto + forum.photoUri.replace('\"',''),
+                uri: prefixPhoto + forum.photoUri.replace('"', ""),
               }}
+              style={styles.img}
             />
           </View>
           <View style={styles.content}>
-            <Text style={styles.title}>זה השם של הפורום</Text>
-            <Text style={styles.disc}>זה תיאור הפורום בלה בלה בלה </Text>
-            <View style={styles.activ}>
-              <Text>משתתפים:200 ||</Text>
-              <Text>נוצר בתאריך : 14.14.14</Text>
-            </View>
+            <Text style={styles.title}>{forum.socialForumName}</Text>
+            <Text style={styles.disc}>{forum.socialForumDiscription}</Text>
+            <Text style={styles.activtxt}>
+              נוצר בתאריך: {forum.socialForumCreatedAt.slice(0, 9)}
+            </Text>
+          </View>
+          <View style={styles.btnWrap}>
+            <TouchableOpacity style={styles.btn}>
+              <Text style={styles.txtbtn}>הכניסה מכאן</Text>
+            </TouchableOpacity>
           </View>
         </View>
       );
@@ -91,55 +97,97 @@ export default function ForumMain({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  scrolView: {},
+  scrolView: {
+    width: "100%",
+    // borderColor: "#000",
+    // borderWidth: 2,
+    // display: "flex",
+    flexDirection: "column",
+    alignContent: "center",
+    paddingHorizontal: 45,
+  },
   con: {
     marginTop: 75,
     // marginHorizontal: 15,
-    borderColor: "#000",
-    borderWidth: 5,
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    marginBottom: 50,
   },
-  ForumCard:{
-    backgroundColor: "#baccbebf",
+  ForumCard: {
+    backgroundColor: "#EBFDEB75",
     borderWidth: 2,
     borderColor: "#3F493A",
     borderRadius: 30,
-    display:"flex",
-    flexDirection:'row',
-    justifyContent:'space-evenly',
-    width:350,
-    paddingVertical:20,
-    height:150,
-    
+    display: "flex",
+    flexDirection: "column",
+    alignContent: "center",
+    width: "100%",
+    paddingVertical: 25,
+    height: 350,
+    marginVertical: 30,
   },
-  img:{
+  img: {
     borderColor: "#3F493A",
     borderWidth: 0.9,
-    width: 117,
-    borderRadius: 10,
-    height:'95%',
+    borderRadius: 50,
+    height: 135,
+    width: 135,
+  },
+  imgView: {
+    // marginLeft: 25,
+    // borderWidth:2,
+    // borderColor:'#000',
+    alignItems: "center",
+  },
+  content: {
+    // marginHorizontal: 5,
+    // display: "flex",
+    // flexDirection: "column",
+    // alignContent: "center",
+    // marginLeft: 25,
+    // marginBottom: 15,
+    // borderWidth: 2,
+    // borderColor: "#000",
+  },
+  title: {
+    fontSize: 20,
+    textAlign: "center",
+  },
+  disc: {
+    fontSize: 12,
+    marginTop: 15,
+    textAlign: "center",
+    marginHorizontal: 5,
+  },
+  activ: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    position: "relative",
+    top: 5,
+  },
+  activtxt: {
+    fontSize: 12,
+    marginRight: 15,
+    textAlign: "center",
+    marginTop: 25,
+  },
+  btnWrap: {
+    // borderWidth: 2,
+    // borderColor: "#000",
+    alignItems:'center',
+    marginVertical:10,
+  },
+  btn: {
+    borderColor: "#3F493A",
+    borderWidth:1,
+    backgroundColor: "#9EB98B75",
+    opacity:0.8,
+    width:190,
+    paddingVertical:10,
+    borderRadius:15,
 
   },
-  content:{
-    marginHorizontal:5,
-    display:'flex',
-    flexDirection:'column',
-    alignContent:'center',
-  },
-  title:{
-    fontSize:20,
-    
-  },
-  disc:{
-    fontSize:12,
-  },
-  activ:{
-    display:"flex",
-    flexDirection:'row',
-    justifyContent:'space-evenly',
-    fontSize:12,
-    marginTop:15,
+  txtbtn:{
+    fontSize:18,
+    textAlign:'center'
   }
 });
