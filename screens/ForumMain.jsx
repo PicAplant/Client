@@ -64,7 +64,7 @@ export default function ForumMain({ navigation, route }) {
       );
 
     return () => {
-      second;
+      
     };
   }, []);
 
