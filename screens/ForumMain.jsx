@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   PermissionsAndroid,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import bg from "../assets/ForumsBG.png";
@@ -28,10 +29,16 @@ export default function ForumMain({ navigation, route }) {
   const [render, setrender] = useState(false);
 
   console.log("Forum Main Route --->", route.params);
+  let CreateForumApi = ``;
   const api = `https://proj.ruppin.ac.il/cgroup41/prod/api/SocialForums/GetForumsById&Follow?userID=${route.params.userID}`;
   let RenderCompenent = 0;
   let profilePhotoURI = "";
+  let photoID = -1;
   const prefixPhoto = "https://proj.ruppin.ac.il/cgroup41/prod/uploadedFiles/";
+  let forumname = ``;
+  let forumdisc = ``;
+  const apiToUpload = "https://proj.ruppin.ac.il/cgroup41/prod/api/Upload";
+  const apiToTable = "https://proj.ruppin.ac.il/cgroup41/prod/addPhoto";
 
   useEffect(() => {
     console.log("onload in Forum Main");
@@ -117,32 +124,22 @@ export default function ForumMain({ navigation, route }) {
   };
 
   const pickImageDor = async () => {
-    let uriName;
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    uriName = result.assets[0].uri;
-    if (!result.canceled) {
-      setSelectedImage(result.assets[0].uri);
-    }
+    let uriName = SelectedImage;
     let uriNameToUp = uriName;
     uriName = uriName.split("ImagePicker");
-    uriName = uriName[1].split("/");
-    uriName = uriName[1].split(".");
+    uriName = uriName[1];
+    uriName = uriName.replace("/", "");
+    console.log("the path before first fetch ---> ", uriName);
 
-    console.log("109 ", uriName[0]);
-    profilePhotoURI = uriName[0];
+    profilePhotoURI = uriName;
     const formData = new FormData();
     formData.append("files", {
       uri: uriNameToUp,
       type: "image/png",
-      name: `${uriName[0]}.png`,
+      name: `${uriName}`,
     });
 
-    fetch(apiUrl, {
+    fetch(apiToUpload, {
       method: "POST",
       body: formData,
       headers: {
@@ -157,48 +154,85 @@ export default function ForumMain({ navigation, route }) {
       .then(
         (result) => {
           console.log(
-            "fetch POST--->Upload Photo respon ---->= ",
+            "fetch POST---> Upload Photo respon ---->= ",
             JSON.stringify(result)
           );
+          let d = new Date();
+
+          const s = {
+            PhotoUri: profilePhotoURI,
+            PhotoTimestamp: 0,
+            PostId: 0,
+            UserId: 0,
+            Latitude: 0,
+            Longitude: 0,
+            PhotoTimestamp:
+              d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear(),
+          };
+
+          fetch(apiToTable, {
+            method: "POST",
+            body: JSON.stringify(s),
+            headers: new Headers({
+              "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+              Accept: "application/json; charset=UTF-8",
+            }),
+          })
+            .then((response) => {
+              console.log("res=", JSON.stringify(response));
+              return response.json();
+            })
+            .then(
+              (result) => {
+                let res = result;
+
+                console.log(
+                  "good result from fetch insert photo to table ---> ",
+                  res
+                );
+                console.log("the photo id is -->", res.photoId);
+                photoID = res.photoId;
+                console.log(
+                  "Print the parameters before fetch -->",
+                  route.params.userID,
+                  forumname,
+                  forumdisc,
+                  photoID
+                );
+                CreateForumApi = `https://proj.ruppin.ac.il/cgroup41/prod/api/SocialForums/CreateNewForum?userID=${route.params.userID}&forumName=${forumname}&forumDis=${forumdisc}&photoID=${photoID}`;
+                fetch(CreateForumApi, {
+                  method: "POST",
+                  headers: new Headers({
+                    "Content-Type": "application/json; charset=UTF-8",
+                    Accept: "application/json; charset=UTF-8",
+                  }),
+                })
+                  .then((res) => {
+                    console.log("res= ", JSON.stringify(res));
+                    return res.text();
+                  })
+                  .then(
+                    (result) => {
+                      console.log("good result from fetch create forum-->", result);
+                      Alert.alert('פורום נוצר בהצלחה');
+                      navigation.navigate("ForumPage", {
+                        user: route.params,
+                        forum_v2: result,
+                      });
+
+                    },
+                    (error) => {
+                      console.log("ERROR in create forum fetch !=", error);
+                    }
+                  );
+              },
+              (error) => {
+                console.log("err post=", JSON.stringify(error));
+              }
+            );
         },
         (error) => {
           console.log("err post in upload photo fetch=", error);
-        }
-      );
-    let d = new Date();
-
-    const s = {
-      PhotoUri: profilePhotoURI,
-      PhotoTimestamp: 0,
-      PostId: 0,
-      UserId: route.params.userID,
-      Latitude: 0,
-      Longitude: 0,
-      PhotoTimestamp:
-        d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear(),
-    };
-
-    fetch(apiUrlinsert, {
-      method: "POST",
-      body: JSON.stringify(s),
-      headers: new Headers({
-        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
-        Accept: "application/json; charset=UTF-8",
-      }),
-    })
-      .then((response) => {
-        console.log("res=", JSON.stringify(response));
-        return response.json();
-      })
-      .then(
-        (result) => {
-          let GetUser = JSON.stringify(result);
-          if (GetUser != "") {
-            console.log("fetch POST= ", JSON.stringify(result));
-          }
-        },
-        (error) => {
-          console.log("err post=", JSON.stringify(error));
         }
       );
   };
@@ -209,8 +243,54 @@ export default function ForumMain({ navigation, route }) {
       setSelectedImage(uri);
     }
   };
+
+  const ModalCompenent = () => {
+    return (
+      <View style={styles.modal}>
+        <Text style={styles.titleModal}>יצירת פורום חדש</Text>
+
+        {SelectedImage == null ? (
+          <TouchableOpacity
+            style={styles.galleryButton}
+            title="Pick an image from camera roll"
+            onPress={() => {
+              handleSelectImage("gallery");
+            }}
+          >
+            <Image source={galleryIcon} style={styles.galleryIcon}></Image>
+          </TouchableOpacity>
+        ) : (
+          <Image
+            style={{ width: 95, height: 95, borderRadius: 95 }}
+            source={{ uri: SelectedImage }}
+          />
+        )}
+        <TextInput
+          onChangeText={(name) => (forumname = name)}
+          style={styles.input}
+          placeholder="בחר שם לפורום"
+        />
+        <TextInput
+          onChangeText={(name) => (forumdisc = name)}
+          style={styles.input}
+          placeholder="תיאור הפורום בקצרה"
+        />
+        <TouchableOpacity
+          onPress={() => {
+            CreateForum();
+          }}
+          style={styles.btn2}
+        >
+          <Text style={styles.txtbtn2}>צור פורום חדש</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
   const CreateForum = () => {
     console.log("Create Forum !!!!");
+    console.log(SelectedImage, forumname, forumdisc);
+
+    pickImageDor();
   };
 
   if (ForumsList != 0) {
@@ -262,54 +342,11 @@ export default function ForumMain({ navigation, route }) {
         style={{ width: "100%", height: "100%", zIndex: -1 }}
         source={bg}
       >
-        {Modal === true ? modalwindow : ""}
+        {Modal === true ? <ModalCompenent /> : ""}
         <TouchableOpacity
           style={styles.btnadd}
           onPress={() => {
             setModal((prev) => !prev);
-            setmodalwindow(
-              <View style={styles.modal}>
-                <Text style={styles.titleModal}>יצירת פורום חדש</Text>
-
-                {SelectedImage == null ? (
-                  <TouchableOpacity
-                    style={styles.galleryButton}
-                    title="Pick an image from camera roll"
-                    onPress={() => {
-                      handleSelectImage("gallery");
-                    }}
-                  >
-                    <Image
-                      source={galleryIcon}
-                      style={styles.galleryIcon}
-                    ></Image>
-                  </TouchableOpacity>
-                ) : (
-                  <Image
-                    style={{ width: 95, height: 95, borderRadius: 95 }}
-                    source={{ uri: SelectedImage }}
-                  />
-                )}
-                <TextInput
-                  onChangeText={(name) => setNameInput(name)}
-                  style={styles.input}
-                  placeholder="בחר שם לפורום"
-                />
-                <TextInput
-                  onChangeText={(name) => setNameInput(name)}
-                  style={styles.input}
-                  placeholder="תיאור הפורום בקצרה"
-                />
-                <TouchableOpacity
-                  onPress={() => {
-                    CreateForum();
-                  }}
-                  style={styles.btn2}
-                >
-                  <Text style={styles.txtbtn2}>צור פורום חדש</Text>
-                </TouchableOpacity>
-              </View>
-            );
           }}
         >
           <Text style={styles.btntitle}>{Modal === true ? "X" : "+"}</Text>

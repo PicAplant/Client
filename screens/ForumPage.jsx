@@ -15,6 +15,7 @@ export default function ForumPage({ navigation, route }) {
   useEffect(() => {
     console.log("onload in ForumPage this is the Route", route.params);
     console.log("Forum detail: --->\n", route.params.forum);
+    console.log('Forum_v2?--->',route.params.forum_v2);
   }, []);
   return (
     <>
