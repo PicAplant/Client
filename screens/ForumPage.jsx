@@ -201,6 +201,17 @@ export default function ForumPage({ navigation, route }) {
         }
       );
   };
+  const AddPost=()=>{
+    console.log('Parametes --->',TheForum.socialForumId,route.params.user.userID,)
+  }
+
+  const AddPostBtn=()=>{
+    return(
+      <TouchableOpacity style={styles.BTN} onPress={()=>{AddPost()}}>
+        <Text style={styles.BTNtitle}>שתף פוסט</Text>
+      </TouchableOpacity>
+    )
+  }
 
   const HeaderCompenent = () => {
     if (TheForum != 0) {
@@ -241,6 +252,7 @@ export default function ForumPage({ navigation, route }) {
             >
               {isFollow(!ReRender)}
             </TouchableOpacity>
+            {!ReRender?<AddPostBtn/>:null}
           </View>
         </View>
       );
@@ -260,12 +272,30 @@ export default function ForumPage({ navigation, route }) {
           <Text style={styles.content2txt}>{props.content}</Text>
         </View>
         <View style={styles.userdetail}>
-          <Text style={{textAlign:'center'}}>{props.username}</Text>
-          <Text  style={{textAlign:'center'}}>{props.usertitle}</Text>
+          <Text style={{ textAlign: "center" }}>{props.username}</Text>
+          <Text style={{ textAlign: "center" }}>{props.usertitle}</Text>
         </View>
-      <TouchableOpacity>
-        <Text style={{textAlign:'center',fontSize:17,color:'darkgreen',marginTop:15,marginBottom:5}}>תגובות</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            console.log("the post Id is -->", props.id, route.params.user);
+            navigation.navigate("replayScreen", {
+              postID: props.id,
+              user: route.params.user,
+            });
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 17,
+              color: "darkgreen",
+              marginTop: 25,
+              marginBottom: 5,
+            }}
+          >
+            תגובות
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -419,14 +449,14 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     // marginHorizontal: 10,
     // marginTop: 15,
-    position:'absolute',
-    width:'53%',
-    left:142,
-    bottom:85,
+    position: "absolute",
+    width: "53%",
+    left: 142,
+    bottom: 85,
   },
-  content2txt:{
-    textAlign:'left',
-    fontSize:16,
+  content2txt: {
+    textAlign: "left",
+    fontSize: 16,
   },
   Greet: {
     fontSize: 12,
@@ -458,12 +488,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 10,
   },
-  userdetail:{
+  userdetail: {
     // borderColor: "#000",
     // borderWidth: 1,
-    width:'25%',
-    position:'absolute',
-    top:140,
-    left:28,
+    width: "25%",
+    position: "absolute",
+    top: 140,
+    left: 28,
   },
 });
