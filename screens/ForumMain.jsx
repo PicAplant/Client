@@ -293,7 +293,7 @@ export default function ForumMain({ navigation, route }) {
     pickImageDor();
   };
   const scalbleContent = (text, num) => {
-    console.log("the length of the txt -- >", text.length);
+    // console.log("the length of the txt -- >", text.length);
     if (text.length >= num) {
       console.log(text.slice(0, num) + "...");
       return text.slice(0, num) + "...";
