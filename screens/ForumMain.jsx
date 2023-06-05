@@ -63,9 +63,7 @@ export default function ForumMain({ navigation, route }) {
         }
       );
 
-    return () => {
-      
-    };
+    return () => {};
   }, []);
 
   const uploadFile = () => {
@@ -213,13 +211,15 @@ export default function ForumMain({ navigation, route }) {
                   })
                   .then(
                     (result) => {
-                      console.log("good result from fetch create forum-->", result);
-                      Alert.alert('פורום נוצר בהצלחה');
+                      console.log(
+                        "good result from fetch create forum-->",
+                        result
+                      );
+                      Alert.alert("פורום נוצר בהצלחה");
                       navigation.navigate("ForumPage", {
                         user: route.params,
                         forum_v2: result,
                       });
-
                     },
                     (error) => {
                       console.log("ERROR in create forum fetch !=", error);
@@ -292,6 +292,15 @@ export default function ForumMain({ navigation, route }) {
 
     pickImageDor();
   };
+  const scalbleContent = (text, num) => {
+    console.log("the length of the txt -- >", text.length);
+    if (text.length >= num) {
+      console.log(text.slice(0, num) + "...");
+      return text.slice(0, num) + "...";
+    } else {
+      return text;
+    }
+  };
 
   if (ForumsList != 0) {
     RenderCompenent = ForumsList.map((forum, index) => {
@@ -312,7 +321,7 @@ export default function ForumMain({ navigation, route }) {
           </View>
           <View style={styles.content}>
             <Text style={styles.title}>{forum.socialForumName}</Text>
-            <Text style={styles.disc}>{forum.socialForumDiscription}</Text>
+            <Text style={styles.disc}>{scalbleContent(forum.socialForumDiscription,78)}</Text>
             <Text style={styles.activtxt}>
               נוצר בתאריך: {forum.socialForumCreatedAt.slice(0, 9)}
             </Text>
@@ -467,8 +476,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   btn: {
-    borderColor: "#3F493A",
-    borderWidth: 1,
+    borderBottomColor: "#3F493A",
+    borderBottomWidth: 2,
     backgroundColor: "#9EB98B75",
     opacity: 0.8,
     width: 200,

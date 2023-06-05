@@ -64,15 +64,77 @@ export default function ForumPage({ navigation, route }) {
   const scalbleFontText = (text) => {
     console.log(text.length);
     if (text.length <= 8) {
-      return <Text style={{ fontSize: 25,backgroundColor:'#90AE9580',padding:7,borderRadius:12 }}>{text}</Text>;
+      return (
+        <Text
+          style={{
+            fontSize: 25,
+            backgroundColor: "#90AE9580",
+            padding: 7,
+            borderRadius: 12,
+          }}
+        >
+          {text}
+        </Text>
+      );
     } else if (text.length > 24) {
-      return <Text style={{ fontSize: 14 ,backgroundColor:'#90AE9580',padding:7,borderRadius:12}}>{text}</Text>;
+      return (
+        <Text
+          style={{
+            fontSize: 14,
+            backgroundColor: "#90AE9580",
+            padding: 7,
+            borderRadius: 12,
+          }}
+        >
+          {text}
+        </Text>
+      );
     } else if (text.length > 18) {
-      return <Text style={{ fontSize: 17,backgroundColor:'#90AE9580',padding:7,borderRadius:12 }}>{text}</Text>;
+      return (
+        <Text
+          style={{
+            fontSize: 17,
+            backgroundColor: "#90AE9580",
+            padding: 7,
+            borderRadius: 12,
+          }}
+        >
+          {text}
+        </Text>
+      );
     } else if (text.length > 14) {
-      return <Text style={{ fontSize: 20,backgroundColor:'#90AE9580',padding:7,borderRadius:12 }}>{text}</Text>;
+      return (
+        <Text
+          style={{
+            fontSize: 20,
+            backgroundColor: "#90AE9580",
+            padding: 7,
+            borderRadius: 12,
+          }}
+        >
+          {text}
+        </Text>
+      );
     } else if (text.length > 8) {
-      return <Text style={{ fontSize: 22,backgroundColor:'#90AE9580',padding:7,borderRadius:12 }}>{text}</Text>;
+      return (
+        <Text
+          style={{
+            fontSize: 22,
+            backgroundColor: "#90AE9580",
+            padding: 7,
+            borderRadius: 12,
+          }}
+        >
+          {text}
+        </Text>
+      );
+    }
+  };
+  const isFollow = (str) => {
+    if (str == "yes") {
+      return <Text style={styles.BTNtitle}>הסר מעקב</Text>;
+    } else {
+      return <Text style={styles.BTNtitle}>הצטרפות</Text>;
     }
   };
 
@@ -96,7 +158,12 @@ export default function ForumPage({ navigation, route }) {
             </View>
           </View>
           <View style={styles.content}>
-            <Text textAlign="right">{TheForum.socialForumDiscription}</Text>
+            <Text  textAlign="justify">{TheForum.socialForumDiscription}</Text>
+          </View>
+          <View style={styles.Col}>
+            <TouchableOpacity style={styles.BTN}>
+              {isFollow(TheForum.follow)}
+            </TouchableOpacity>
           </View>
         </View>
       );
@@ -134,6 +201,19 @@ const styles = StyleSheet.create({
   iconBack: {
     fontSize: 50,
     fontWeight: 900,
+  },
+  BTN:{
+    paddingHorizontal:35,
+    paddingVertical:5,
+    backgroundColor:'#9EB98B75',
+    borderRadius:12,
+    borderBottomColor:'#90AE95',
+    borderBottomWidth:2
+
+  },
+  BTNtitle:{
+    fontSize:16,
+
   },
   back: {
     position: "absolute",
@@ -182,9 +262,8 @@ const styles = StyleSheet.create({
   content: {
     // borderColor: "#000",
     // borderWidth: 1,
-    marginHorizontal:10,
-    marginTop:15,
-
+    marginHorizontal: 10,
+    marginTop: 15,
   },
   Greet: {
     fontSize: 12,
@@ -192,6 +271,6 @@ const styles = StyleSheet.create({
     // position:'relative',
     // top:55,
     // left:35,
-    marginBottom:10,
+    marginBottom: 10,
   },
 });
