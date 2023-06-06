@@ -262,7 +262,7 @@ export default function UserProfile({ route, navigation }) {
                       borderColor: "black",
                     }}
                     source={{
-                      uri: `https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/user-profile-icon.png`,
+                      uri: `https://proj.ruppin.ac.il/cgroup41/prod/uploadedFiles/AnonymosProfile.png`,
                     }}
                   />
                 )}

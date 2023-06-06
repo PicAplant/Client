@@ -427,12 +427,20 @@ export default function ForumPage({ navigation, route }) {
 
   const SingleReplay = (props) => {
     console.log("the props of singleReplay compnent -->", props);
+    let photoAdress=''
+    if (props.uri=='') {
+      photoAdress=`https://proj.ruppin.ac.il/cgroup41/prod/uploadedFiles/AnonymosProfile.png`
+    }
+    else{
+      photoAdress=prefixPhoto + props.uri.replace('\"', "")+'.png'
+    }
+    console.log(photoAdress);
     return (
       <View style={styles.cardReplay}>
         <View style={styles.imgViewre}>
           <Image
             style={styles.profilePhotore}
-            source={{ uri: prefixPhoto + props.uri.replace('"', "") }}
+            source={{ uri: photoAdress }}
           />
         </View>
         <View style={styles.content2}>
