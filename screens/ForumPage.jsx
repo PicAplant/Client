@@ -460,12 +460,19 @@ export default function ForumPage({ navigation, route }) {
 
   const SinglePost = (props) => {
     console.log("this is props of singlepost -->", props);
+    let photoAdress=''
+    if (props.uri=='') {
+      photoAdress=`https://proj.ruppin.ac.il/cgroup41/prod/uploadedFiles/AnonymosProfile.png`
+    }
+    else{
+      photoAdress=prefixPhoto + props.uri.replace('\"', "")+'.png'
+    }
     return (
       <View style={styles.cardPost}>
         <View style={styles.imgView}>
           <Image
             style={styles.profilePhoto}
-            source={{ uri: prefixPhoto + props.uri.replace('"', "") }}
+            source={{ uri: photoAdress}}
           />
         </View>
         <View style={styles.content3}>
