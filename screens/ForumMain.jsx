@@ -40,7 +40,9 @@ export default function ForumMain({ navigation, route }) {
   const apiToUpload = "https://proj.ruppin.ac.il/cgroup41/prod/api/Upload";
   const apiToTable = "https://proj.ruppin.ac.il/cgroup41/prod/addPhoto";
 
+
   useEffect(() => {
+
     console.log("onload in Forum Main");
     fetch(api, {
       method: "GET",

@@ -31,7 +31,7 @@ import SearchingPage from "./screens/SearchingPage";
 import SearchResults from "./screens/SearchResults";
 import ForumMain from "./screens/ForumMain";
 import ForumPage from "./screens/ForumPage";
-import replayScreen from "./screens/replayScreen";
+import ReplayScreen from "./screens/replayScreen";
 I18nManager.forceRTL(true);
 I18nManager.allowRTL(true);
 //web:222431351949-u9t6ooea1k530kli2d6tiqbk6cndm78n.apps.googleusercontent.com
@@ -98,11 +98,7 @@ export default function App() {
           component={QuestExpertScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="replayScreen"
-          component={replayScreen}
-          options={{ headerShown: false }}
-        />
+
         <Stack.Screen
           name="QuizScreen"
           component={QuizScreen}
