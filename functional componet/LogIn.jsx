@@ -47,15 +47,17 @@ export default function Login({ navigation }) {
     async function load() {
       try {
         let isLoged = await AsyncStorage.getItem("isLoged");
-        console.log(isLoged);
+        console.log('line 50 ',isLoged);
         if (isLoged == "1") {
           let userAsync = await AsyncStorage.getItem("user");
           let localuser = JSON.parse(userAsync);
           console.log("AutoLogin localuser ---->", localuser);
-          navigation.dispatch(StackActions.replace("Identify", localuser));
+          navigation.navigate("Identify", localuser)
         } else setIsLoged(false);
       } catch (error) {
         console.log("15");
+        console.log(error);
+
       }
     }
     load();
@@ -142,7 +144,9 @@ export default function Login({ navigation }) {
               {
                 save(GetUser);
               }
-              navigation.dispatch(StackActions.replace("Identify", GetUser));
+              // navigation.dispatch(StackActions.replace("Identify", GetUser));
+              navigation.navigate("Identify", GetUser)
+
             }
           },
           (error) => {
@@ -151,7 +155,7 @@ export default function Login({ navigation }) {
           }
         );
 
-      // navigation.dispatch(StackActions.replace('UserProfile'))
+
     }
   }
   if (isLoged == false) {

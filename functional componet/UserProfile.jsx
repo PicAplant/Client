@@ -343,23 +343,16 @@ export default function UserProfile({ route, navigation }) {
                 </View>
               </TouchableOpacity>
 
-              {/* <TouchableOpacity
-                style={styles.btnStyleProfile}
-                onPress={() => reset()}
-              >
-                <View style={styles.ViewInButton}>
-                  <Text style={{ fontSize: 25, textAlign: "center" }}>
-                    {" "}
-                    מחק אסינכ
-                  </Text>
-                </View>
-              </TouchableOpacity> */}
+
 
               <TouchableOpacity
                 style={styles.btnStyleProfile}
-                onPress={() => {
-                  console.log("Shop");
-                }}
+                onPress={() =>
+                  navigation.navigate("Shop", {
+                    userId: route.params.userID,
+                    isExpert: route.params.isExpert,
+                  })
+                }
               >
                 <View style={styles.ViewInButton}>
                   <Image style={styles.iconIdentification} source={ShopIcon} />

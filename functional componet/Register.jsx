@@ -17,11 +17,15 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  Pressable,
+  Modal
 } from "react-native";
 import { StackActions } from "@react-navigation/native";
 import UserProfile from "./UserProfile";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import RadioButton from "./RadioButton";
+
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -44,6 +48,8 @@ export default function Register({ navigation }) {
   const [checkValdEmail, setCheckValdEmail] = useState(true);
   const [CheckValdPassword, setCheckValdPassword] = useState(false);
   const [token, setToken] = useState("");
+  const [terms, setTerms] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [request, response, promtAsync] = Google.useAuthRequest({
     clientId:
@@ -68,6 +74,10 @@ export default function Register({ navigation }) {
     } catch (error) {
       console.log(error);
     }
+  }
+  const Example=(state)=>{
+    setTerms(state)
+    console.log('Example-->',state);
   }
 
   //permissions for push
@@ -118,6 +128,10 @@ export default function Register({ navigation }) {
     // console.log('55 ',user);
   }
 
+  const ModalTerms = () =>{
+setModalVisible(true)
+}
+
   async function RegisterAndLogin() {
     let s;
     let GetUser = "";
@@ -144,7 +158,11 @@ export default function Register({ navigation }) {
         Alert.alert("יש לבדוק תקינות הכנסת נתונים");
         return;
       }
-
+      
+      if (terms == false) {
+        Alert.alert("יש להסכים לתנאי השימוש");
+        return;
+      }
       if (re.test(email) || regex.test(email)) {
         setCheckValdEmail(false);
       } else {
@@ -219,7 +237,7 @@ export default function Register({ navigation }) {
     }
   };
   const [passwordVisible, setPasswordVisible] = useState(true);
-  console.log(isSelected);
+  console.log('229',isSelected);
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -295,7 +313,62 @@ export default function Register({ navigation }) {
                   <Picker.Item label="מגדל" value="מגדל" />
                   <Picker.Item label="חובב טבע" value="חובב טבע" />
                 </Picker>
+                
               </View>
+              <View style={{ flexDirection: "row" }}>
+<RadioButton Size={7} Brcolor={'black'} Label={''} TranferInfo={Example}></RadioButton>
+<Text>לאישור</Text><Text style={{color:'blue',textDecorationLine: "underline",}} onPress={()=>ModalTerms()}> תנאי השימוש</Text>
+<View style={stylesM.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={stylesM.centeredView}>
+          <ScrollView
+              contentContainerStyle={stylesM.modalView}>
+                <View style={{flexDirection: "column",}}>
+            <Text style={stylesM.modalText}>בליעה של כל צמח או מוצר צמחי. באחריות המשתמש לחקור, לאמת ולהבטיח את הבטיחות של כל צמח לפני הצריכה או השימוש.</Text>
+            <Text style={stylesM.modalText}>2.2. דיבור פוגעני: במהלך השימוש באפליקציה, אתה עלול להיתקל בתוכן שנוצר על ידי משתמשים, כולל דיבור או שפה שעלולים להיות פוגעניים או בלתי הולמים. אנו לא תומכים או מסננים תוכן כזה ומתנערים בזאת מכל אחריות או חבות לכל שפה פוגענית, מזיקה או בלתי הולמת שנתקלה באפליקציה.
+</Text>
+<Text style={stylesM.modalText}>אחריות משתמש
+3.1. צמחים רעילים: האפליקציה עשויה לספק מידע על צמחים רעילים; עם זאת, האחריות לטיפול, התמודדות או אינטראקציה עם כל צמח רעיל היא על המשתמש בלבד. לא נישא באחריות לכל תוצאה, נזק או נזק הנובעים מאינטראקציות של המשתמש או מהתמודדויות עם צמחים רעילים.</Text>
+
+
+<Text style={stylesM.modalText}>פרטיות ואבטחה
+4.1. מידע אישי: אנו מעריכים את פרטיותך ומחויבים לשמור על המידע האישי שלך מאובטח ובטוח. על ידי שימוש באפליקציה, אתה מסכים למדיניות הפרטיות שלנו, המתארת כיצד אנו אוספים, משתמשים ומגנים על המידע האישי שלך. אנא עיין במדיניות הפרטיות שלנו כדי להבין את הנהלים שלנו בנוגע לפרטיות שלך.</Text>
+
+
+<Text style={stylesM.modalText}>הוראות כלליות
+תנאים אלה מהווים את כל ההסכם בינך לבינינו לגבי השימוש באפליקציה ומחליפים כל הסכמים או הבנות קודמים, בין בכתב ובין בעל פה. תנאים אלה יהיו כפופים לחוקי [שיפוט], ללא קשר לעקרונות ניגוד החוקים שלהם. כל מחלוקת שתתעורר במסגרת תנאים אלה או בקשר אליהם תהיה כפופה לסמכות השיפוט הבלעדית של בתי המשפט הממוקמים ב[תחום שיפוט].</Text>
+
+
+<Text style={stylesM.modalText}>על ידי סימון תיבת הסימון, אתה מאשר שקראת, הבנת והסכמת לתנאי שימוש אלה.
+</Text>
+
+
+<Text style={stylesM.modalText}>אם יש לך שאלות או חששות לגבי תנאים אלה, אנא צור איתנו קשר בכתובת picaplantteam@gmail.com.
+</Text>
+
+</View>
+            <Pressable
+              style={[stylesM.button, stylesM.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={stylesM.textStyle}>Hide Modal</Text>
+            </Pressable>
+          </ScrollView>
+        </View>
+      </Modal>
+      {/* <Pressable
+        style={[stylesM.button, stylesM.buttonOpen]}
+        onPress={() => setModalVisible(true)}>
+        <Text style={stylesM.textStyle}>Show Modal</Text>
+      </Pressable> */}
+    </View>
+</View>
 
               {/* <View style={styles.checkboxContainer}>
         <CheckBox
@@ -347,3 +420,49 @@ export default function Register({ navigation }) {
     </KeyboardAvoidingView>
   );
 }
+
+const stylesM = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+    
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    fontSize:12,
+    marginBottom: 7,
+    textAlign: 'center',
+  },
+});

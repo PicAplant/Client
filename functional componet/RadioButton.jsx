@@ -13,13 +13,16 @@ import React, { useState } from "react";
 export default function RadioButton(props) {
   const [On, setOn] = useState(false);
   console.log(props);
+  console.log(On);
+
   const styles = StyleSheet.create({
     Answer: {
       flexDirection: "row",
-      paddingBottom: 9,
-      marginRight: 125,
-      marginTop: 6,
+      // paddingBottom: 9,
+      // marginRight: 125,
+      // marginTop: 6,
       marginBottom: 6,
+      
     },
   
     AnswerTXT: {
@@ -33,7 +36,7 @@ export default function RadioButton(props) {
       width: props.Size+8,
       height: props.Size+8,
       marginLeft: 20,
-      marginTop: 15,
+      marginTop: 4,
       borderRadius: 4,
     },
   
@@ -45,7 +48,7 @@ export default function RadioButton(props) {
       width: props.Size,
       height: props.Size,
       margin: 3,
-      backgroundColor: props.Bcolor,
+      backgroundColor: props.Brcolor,
       borderRadius: 2,
     },
   });
@@ -54,7 +57,8 @@ export default function RadioButton(props) {
     <TouchableOpacity
       onPress={() => {
         setOn((prev) => !prev);
-        props.TranferInfo(On);
+        props.TranferInfo(!On);
+        console.log('58 ', On)
       }}
       style={styles.Answer}
     >
