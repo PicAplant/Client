@@ -48,7 +48,8 @@ export default function IdentificationResults({ navigation, route }) {
     const imgArr = [];
     const apiKeyCGroup41 = "kip0Z1E82eAOoH35RroCeUJIGoMKGMitMehj1NahjUAUgCdYCk"; //77 remining
     const apoKeyGilad = "dMF9bxaLq8dcblg5CE5kGqgFKlJ63VYPF3cKD24u9p9KOenUxU"; //30 remining
-    const RuppinServer2Key ="XLqfiYmJSFnBAOinTtoLHI4pGeJRPoCBuX4xA8wQNX5ugDdPdT"; //100 remining
+    const RuppinServer2Key =
+      "XLqfiYmJSFnBAOinTtoLHI4pGeJRPoCBuX4xA8wQNX5ugDdPdT"; //100 remining
     const bestGroupKey = "P9nJ90ECdH2fdvYOxG2eQaJb0PHakmLT9uH8c8Pz9xdWt3oCXQ"; //100 remining
     const DorGuyGiladKey = "wWpQR2dgYzxJhLOhSAoB9O3go3tQhkmJMHttEXfDJahfAykbhs"; //100 remiing
 
@@ -58,7 +59,7 @@ export default function IdentificationResults({ navigation, route }) {
     }).then((base64String) => {
       imgArr.push(base64String);
       const data = {
-        api_key: Math.random() > 0.5 ? apoKeyGilad : apiKeyCGroup41,
+        api_key: Math.random() > 0.5 ? RuppinServer2Key : bestGroupKey,
         //api_key: "yMUTWGPue7vkkVZaKQnX2RjWpweqJ7TTbuOpkevPlR1OAXIAWI",
         // api_key: "8mq1p9sPwdlA5XvhdCDdbFMW4skwbAm5FJw83DkdrBhKjwkeGS",
         // api_key: "nhNh2OGxj4hGUDsNvqggk4dwdJXtIjz0gTCU7OZ4BbXEiSRwdK",
