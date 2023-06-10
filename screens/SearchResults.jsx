@@ -1,5 +1,5 @@
 //new
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 //import Unorderedlist from 'react-native-unordered-list';
 import {
   Text,
@@ -16,6 +16,13 @@ import NavBar from "../functional componet/navBar";
 import BackGroundImageLocal from "../assets/bg_userProfile.png";
 import styles from "../App.module.js";
 import Searching from "./Searching";
+import medicalIcon from "../assets/health.png"
+import eatableIcon from "../assets/spice.png"
+import allergyIcon from "../assets/allergy.png"
+import shieldIcon from "../assets/shield.png"
+import distinctIcon from "../assets/distinct.png"
+import dangerIcon from "../assets/danger.png"
+import beeIcon from "../assets/bee.png"
 export default function SearchResults({ navigation,route }) {
     const { plant,userID,isExpert,plants } =route.params;
     const [moreInfo,setMoreInfo]=useState(false);
@@ -71,7 +78,7 @@ return(
    
    <Searching plants={plants} navigateToSearchResults={navigateToSearchResults}
        />
-       <ScrollView contentContainerStyle={{alignItems:"center",paddingBottom:15}}>
+       <ScrollView contentContainerStyle={{alignItems:"center",paddingBottom:30}}>
          {plant.plantImage===null?"":<Image source={{uri: plant.plantImage}}
           style={{width: "90%",
       aspectRatio: 1,
@@ -82,7 +89,9 @@ return(
 }}>מידע כללי:</Text>
   <Text> • שם הצמח: {plant.plantName}</Text>
   <Text> • שם מדעי: {plant.plantScientificName}</Text>
-  {plant.plantIsToxic?<Text style={{fontSize:22,color:"#F00"}}> • צמח רעיל!</Text>:""}
+  {plant.plantIsToxic?<View style={styles.iconView}>
+<Text> • צמח רעיל!</Text>
+<Image source={dangerIcon} style={styles.searchResultsIcon}></Image></View>:""}
 
   <Text> • משפחה: {plant.plantFamily}</Text>
   <Text> • מס׳ עלי כותרת: {plant.plantNumOfPetals}</Text>
@@ -92,12 +101,33 @@ return(
   <Text> • צורת הגבעול: {plant.plantStemShape}</Text>
   <Text> • צורת חיים: {plant.plantLifeForm}</Text>
   <Text> • תקופת גידול: {plant.plantBloomingSeason}</Text>
-{plant.PlantMedic?<Text> • משמש לרפואה</Text>:""}
-{plant.plantIsEatable?<Text> • צמח אכיל</Text>:""}
-{plant.plantIsAllergenic?<Text> • צמח אלרגני</Text>:""}
-{plant.plantIsEndangered?<Text> • צמח זה נמצא תחת סכנת הכחדה</Text>:""}
-{plant.plantIsProtected?<Text> • צמח מוגן</Text>:""}
-{plant.plantIsProvidedHoneydew?<Text> • מצמח זה ניתן להנפיק דבש</Text>:""}
+  <View style={styles.iconView}>
+</View>
+{plant.PlantMedic?<View style={{flexDirection:"row",justifyContent:"center"}}>
+<Text> • משמש לרפואה</Text>
+<Image source={medicalIcon} style={styles.searchResultsIcon}></Image>
+</View>:""}
+{plant.plantIsEatable?<View style={styles.iconView}>
+<Text> • צמח אכיל</Text>
+<Image source={eatableIcon} style={styles.searchResultsIcon}></Image>
+</View>:""}
+{plant.plantIsAllergenic?<View style={styles.iconView}>
+<Text> • צמח אלרגני</Text>
+<Image source={allergyIcon} style={styles.searchResultsIcon}></Image>
+</View>:""}
+{plant.plantIsEndangered?<View style={styles.iconView}>
+<Text> • צמח זה נמצא תחת סכנת הכחדה</Text>
+<Image source={distinctIcon} style={styles.searchResultsIcon}></Image>
+</View>:""}
+{plant.plantIsProtected?<View style={styles.iconView}>
+<Text> • צמח מוגן</Text>
+<Image source={shieldIcon} style={styles.searchResultsIcon}></Image>
+</View>:""}
+{plant.plantIsProvidedHoneydew?
+  <View style={styles.iconView}>
+<Text> • מצמח זה ניתן להנפיק דבש</Text>
+<Image source={beeIcon} style={styles.searchResultsIcon}></Image>
+</View>:""}
 <TouchableOpacity title="more info" onPress={toggleSwitch}>
 {moreInfo?
 <Text style={{textDecorationLine:"underline"}}> • הצג פחות</Text>
@@ -105,7 +135,7 @@ return(
 
 }
 </TouchableOpacity>
-{moreInfo&&<Text style={{writingDirection: 'rtl',maxWidth:"99%"}}> • מידע נוסף: {plant.plantMoreInfo}</Text>}
+{moreInfo&&<Text style={{writingDirection: 'rtl',maxWidth:"99%"}}>{plant.plantMoreInfo}</Text>}
   </View>
   <View><Text style={{textAlign:"center",fontSize:24}}>צמחים בעלי מאפיינים דומים</Text>
   <ScrollView horizontal>
@@ -129,16 +159,3 @@ return(
          </TouchableWithoutFeedback>
      );
 };
-
-
-
-
-
-
-
-
-
-
-  
-
-

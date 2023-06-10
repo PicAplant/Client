@@ -8,6 +8,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.22.5",
     "@emailjs/browser": "^3.10.0",
     "@parse/react-native": "^0.0.1-alpha.18",
     "@react-native-async-storage/async-storage": "~1.17.3",
