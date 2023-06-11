@@ -283,6 +283,7 @@ export default function UserProfile({ route, navigation }) {
                 </View>
               </View>
             </View>
+
             <TouchableOpacity
               style={styles.backSettings}
               onPress={() =>
@@ -303,7 +304,7 @@ export default function UserProfile({ route, navigation }) {
                 color="#77a068"
               ></Ionicons>
             </TouchableOpacity>
-            <View style={{ marginTop: 170 }}>
+            <View style={{ marginTop: 170,flexDirection:'column',alignItems:'center'}}>
               <TouchableOpacity
                 style={styles.btnStyleProfile}
                 onPress={() =>

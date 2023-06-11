@@ -198,9 +198,10 @@ export default StyleSheet.create({
   flatList: {
     fontSize: 15,
     paddingTop: 5,
-    paddingBottom: 5,
+    paddingBottom: 15,
     margin: 2,
-    marginBottom:100
+    marginBottom:5,
+ 
 
   },
   infoText: {
@@ -215,7 +216,8 @@ export default StyleSheet.create({
   borderColor: "lightblue",
   borderWidth: 1,
   textAlign:"center",
-  borderRadius:20
+  borderRadius:20,
+  marginTop:40,
 
   },
   plantInfo:{

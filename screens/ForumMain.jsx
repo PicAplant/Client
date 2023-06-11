@@ -40,9 +40,7 @@ export default function ForumMain({ navigation, route }) {
   const apiToUpload = "https://proj.ruppin.ac.il/cgroup41/prod/api/Upload";
   const apiToTable = "https://proj.ruppin.ac.il/cgroup41/prod/addPhoto";
 
-
   useEffect(() => {
-
     console.log("onload in Forum Main");
     fetch(api, {
       method: "GET",
@@ -323,7 +321,9 @@ export default function ForumMain({ navigation, route }) {
           </View>
           <View style={styles.content}>
             <Text style={styles.title}>{forum.socialForumName}</Text>
-            <Text style={styles.disc}>{scalbleContent(forum.socialForumDiscription,78)}</Text>
+            <Text style={styles.disc}>
+              {scalbleContent(forum.socialForumDiscription, 78)}
+            </Text>
             <Text style={styles.activtxt}>
               נוצר בתאריך: {forum.socialForumCreatedAt.slice(0, 9)}
             </Text>
@@ -390,6 +390,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
     // marginHorizontal: 15,
     marginBottom: 150,
+    flexDirection:'column',
+    alignItems:'center',
   },
   ForumCard: {
     backgroundColor: "#EBFDEB75",

@@ -36,7 +36,7 @@ export default function SearchResults({ navigation, route }) {
   };
   const toggleSwitch = () => {
     setMoreInfo((previousState) => !previousState);
-    console.log(moreInfo);
+    // console.log(moreInfo);
   };
 
   const similarPlantsArray = plants.map((item) => {
@@ -95,6 +95,7 @@ export default function SearchResults({ navigation, route }) {
   });
   return (
     <TouchableWithoutFeedback style={styles.container}>
+      <>
       <ImageBackground
         style={styles.backgroundImage}
         source={BackGroundImageLocal}
@@ -252,12 +253,14 @@ export default function SearchResults({ navigation, route }) {
               </ScrollView>
             </View>
           </ScrollView>
-          <NavBar
-            isExpert={route.params.isExpert}
-            userID={route.params.userID}
-          ></NavBar>
         </SafeAreaView>
       </ImageBackground>
+      <NavBar
+        isExpert={route.params.isExpert}
+        userID={route.params.userID}
+      ></NavBar>
+      </>
+
     </TouchableWithoutFeedback>
   );
 }
