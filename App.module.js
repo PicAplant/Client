@@ -229,16 +229,5 @@ width:"90%",
 padding:5,
 maxWidth:"90%",
 scrollX:false,
-},
-searchResultsIcon:{
-  width:40,
-  aspectRatio:1,
-  margin:5
-},
-iconView:{
-  flexDirection:"row",
-  alignItems:"center",
-  justifyContent:"center"
 }
-
 });
