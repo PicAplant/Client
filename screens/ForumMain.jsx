@@ -349,23 +349,22 @@ export default function ForumMain({ navigation, route }) {
 
   return (
     <>
-      <ImageBackground
-        style={{ width: "100%", height: "100%", zIndex: -1 }}
-        source={bg}
-      >
-        {Modal === true ? <ModalCompenent /> : ""}
-        <TouchableOpacity
-          style={styles.btnadd}
-          onPress={() => {
-            setModal((prev) => !prev);
-          }}
-        >
-          <Text style={styles.btntitle}>{Modal === true ? "X" : "+"}</Text>
-        </TouchableOpacity>
-        <View style={styles.con}>
-          <ScrollView style={styles.scrolView}>
-            {RenderCompenent != 0 ? RenderCompenent : <Text>Loading...</Text>}
-          </ScrollView>
+      <ImageBackground style={{ width: "100%", height: "100%" }} source={bg}>
+        <View style={{ flexDirection: "column", alignContent: "center",paddingHorizontal:50,marginBottom:80 }}>
+          {Modal === true ? <ModalCompenent /> : ""}
+          <TouchableOpacity
+            style={styles.btnadd}
+            onPress={() => {
+              setModal((prev) => !prev);
+            }}
+          >
+            <Text style={styles.btntitle}>{Modal === true ? "X" : "+"}</Text>
+          </TouchableOpacity>
+          <View style={styles.con}>
+            <ScrollView style={styles.scrolView}>
+              {RenderCompenent != 0 ? RenderCompenent : <Text>Loading...</Text>}
+            </ScrollView>
+          </View>
         </View>
       </ImageBackground>
       <NavBar
@@ -384,14 +383,14 @@ const styles = StyleSheet.create({
     // display: "flex",
     flexDirection: "column",
     alignContent: "center",
-    paddingHorizontal: 45,
+    // paddingHorizontal: 45,
   },
   con: {
     marginTop: 5,
     // marginHorizontal: 15,
     marginBottom: 150,
-    flexDirection:'column',
-    alignItems:'center',
+    flexDirection: "column",
+    alignItems: "center",
   },
   ForumCard: {
     backgroundColor: "#EBFDEB75",
@@ -552,7 +551,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
     position: "relative",
     top: 15,
-    left: 285,
+    left: 230,
     marginBottom: 15,
   },
   btntitle: {
