@@ -319,7 +319,7 @@ export default function UserProfile({ route, navigation }) {
                     source={HomePageIcon}
                   />
                   <Text style={{ fontSize: 25, textAlign: "center" }}>
-                    {" "}
+
                     הזיהויים האחרונים שלי
                   </Text>
                 </View>
@@ -337,7 +337,7 @@ export default function UserProfile({ route, navigation }) {
                 <View style={styles.ViewInButton}>
                   <Image style={styles.iconIdentification} source={ForumIcon} />
                   <Text style={{ fontSize: 25, textAlign: "center" }}>
-                    {" "}
+
                     קבוצות במעקב
                   </Text>
                 </View>
@@ -357,7 +357,6 @@ export default function UserProfile({ route, navigation }) {
                 <View style={styles.ViewInButton}>
                   <Image style={styles.iconIdentification} source={ShopIcon} />
                   <Text style={{ fontSize: 25, textAlign: "center" }}>
-                    {" "}
                     חנות
                   </Text>
                 </View>

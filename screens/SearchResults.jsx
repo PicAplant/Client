@@ -63,7 +63,8 @@ return(
 <Pressable style={{alignItems:"center",justifyContent:"center",padding:5,width:160}} onPress={()=>{navigateToSearchResults(item)}}>
 
   {item.plantImage===null?"":<Image source={{uri: item.plantImage}}
- style={{width:140,aspectRatio:1}} />}
+ style={{width:140,aspectRatio:1,borderRadius:20
+}} />}
    <Text>{item.plantName}</Text>
   <Text>{item.plantScientificName}</Text>
  </Pressable>:""}

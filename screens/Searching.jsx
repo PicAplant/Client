@@ -55,7 +55,7 @@ export default function Searching(props) {
                 <Text>{item.plantName}</Text>
                 <Text>{item.plantScientificName}</Text>
                 {item.plantImage===null?"":<Image source={{uri: item.plantImage}}
-   style={{width: 50, height: 50,position:"absolute",left:20}} />}
+   style={{width: 50, height: 50,position:"absolute",left:20,borderRadius:10}} />}
               </TouchableOpacity>)
 }
         />}

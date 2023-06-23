@@ -1,24 +1,15 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import {
-  SafeAreaView,
   KeyboardAvoidingView,
   Image,
   ImageBackground,
   ScrollView,
-  Button,
-  StyleSheet,
   Text,
   View,
-  TextInput,
-  TouchableOpacity,
-  Alert,
+  TouchableOpacity
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import styles from "../App.module.js";
-import Login from "./LogIn";
-import { StackActions } from "@react-navigation/native";
 import NavBar from "./navBar";
 
 export default function UsersForum({ route, navigation }) {
@@ -49,7 +40,7 @@ export default function UsersForum({ route, navigation }) {
           if (forum == null) {
             setforum(ForumId);
           }
-          console.log("Foum = ", ForumId);
+          console.log("Forum = ", ForumId);
         },
         (error) => {
           console.log("err post=", error);
@@ -114,9 +105,7 @@ export default function UsersForum({ route, navigation }) {
                     {st.title}
                   </Text>
                   <Text style={{ textAlign: "left", flex: 1 }}>
-                    asdasd asdasd asdadsasd asdasd asdasdsa asdsad asd sdad
-                    asdasd asdsad asdsad asd sasdasd sdasd sdsds assdasd
-                    sdsdddds{st.description}
+                    {st.description}
                   </Text>
                 </ScrollView>
 
@@ -128,7 +117,18 @@ export default function UsersForum({ route, navigation }) {
               </View>
             </View>
             <View style={{ alignItems: "center", marginBottom: 7 }}>
+ 
+
+
               <TouchableOpacity
+                onPress={() => {
+                  console.log(st)
+                  
+                // navigation.navigate("ForumPage", {
+                //   user: route.params,
+                //   forum: st.forumId,
+                // });
+              }}
                 style={{
                   width: "75%",
                   height: 30,
