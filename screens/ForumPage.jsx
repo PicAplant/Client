@@ -299,6 +299,8 @@ export default function ForumPage({ navigation, route }) {
 
   const ModalCompenent = () => {
     return (
+      <View style={{alignItems:"center",justifyContent:"center"
+     ,zIndex:2}}>
       <View style={styles.modal2}>
         <Text style={{ fontSize: 25, marginTop: 35 }}>שיתוף פוסט חדש</Text>
         <TouchableOpacity
@@ -328,6 +330,7 @@ export default function ForumPage({ navigation, route }) {
           <Text style={styles.BTNtitle}>שלח פוסט</Text>
         </TouchableOpacity>
       </View>
+      </View>
     );
   };
 
@@ -338,12 +341,12 @@ export default function ForumPage({ navigation, route }) {
         <View style={styles.HeaderForum}>
           <View style={styles.Row}>
             <View style={styles.Col}>
-              <Image
+              {/* <Image
                 style={styles.Image}
                 source={{
                   uri: prefixPhoto + TheForum.photoUri.replace('"', ""),
                 }}
-              />
+              /> */}
             </View>
             <View style={styles.Col}>
               <Text style={styles.Greet}>ברוכים הבאים לפורום</Text>
@@ -432,7 +435,7 @@ export default function ForumPage({ navigation, route }) {
       photoAdress=`https://proj.ruppin.ac.il/cgroup41/prod/uploadedFiles/AnonymosProfile.png`
     }
     else{
-      photoAdress=prefixPhoto + props.uri.replace('\"', "")+'.png'
+      // photoAdress=prefixPhoto + props.uri.replace('\"', "")+'.png'
     }
     console.log(photoAdress);
     return (
@@ -465,7 +468,7 @@ export default function ForumPage({ navigation, route }) {
       photoAdress=`https://proj.ruppin.ac.il/cgroup41/prod/uploadedFiles/AnonymosProfile.png`
     }
     else{
-      photoAdress=prefixPhoto + props.uri.replace('\"', "")+'.png'
+      // photoAdress=prefixPhoto + props.uri.replace('\"', "")+'.png'
     }
     return (
       <View style={styles.cardPost}>
@@ -555,7 +558,7 @@ export default function ForumPage({ navigation, route }) {
         <TouchableOpacity
           style={styles.back}
           onPress={() => {
-            navigation.navigate("ForumMain", {
+            navigation.goBack({
               isExpert: route.params.user.isExpert,
               userID: route.params.user.userID,
             });
@@ -707,6 +710,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     marginHorizontal: 10,
     marginTop: 15,
+    alignItems:"center"
   },
   content2: {
     // borderColor: "#000",
@@ -808,13 +812,14 @@ const styles = StyleSheet.create({
   modal2: {
     position: "absolute",
     top: 100,
-    left: 18,
+    //left: 18,
     width: 325,
     height: 350,
     backgroundColor: "#9EB98B",
     zIndex: 5,
     borderRadius: 25,
-    alignItems: "center",
+    justifyContent:"center",
+    alignItems:"center"
   },
 
   input2: {

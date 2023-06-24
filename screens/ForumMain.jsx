@@ -248,6 +248,7 @@ export default function ForumMain({ navigation, route }) {
 
   const ModalCompenent = () => {
     return (
+      <View style={{alignItems:"center",zIndex:2}}>
       <View style={styles.modal}>
         <Text style={styles.titleModal}>יצירת פורום חדש</Text>
 
@@ -262,10 +263,19 @@ export default function ForumMain({ navigation, route }) {
             <Image source={galleryIcon} style={styles.galleryIcon}></Image>
           </TouchableOpacity>
         ) : (
+          <TouchableOpacity
+            style={styles.galleryButton}
+            title="Pick an image from camera roll"
+            onPress={() => {
+              handleSelectImage("gallery");
+            }}
+          >
           <Image
             style={{ width: 95, height: 95, borderRadius: 95 }}
             source={{ uri: SelectedImage }}
           />
+                    </TouchableOpacity>
+
         )}
         <TextInput
           onChangeText={(name) => (forumname = name)}
@@ -285,6 +295,7 @@ export default function ForumMain({ navigation, route }) {
         >
           <Text style={styles.txtbtn2}>צור פורום חדש</Text>
         </TouchableOpacity>
+      </View>
       </View>
     );
   };
@@ -349,8 +360,9 @@ export default function ForumMain({ navigation, route }) {
 
   return (
     <>
+    <View>
       <ImageBackground
-        style={{ width: "100%", height: "100%", zIndex: -1 }}
+        style={{ width: "100%", height: "100%", zIndex: -1}}
         source={bg}
       >
         {Modal === true ? <ModalCompenent /> : ""}
@@ -363,11 +375,12 @@ export default function ForumMain({ navigation, route }) {
           <Text style={styles.btntitle}>{Modal === true ? "X" : "+"}</Text>
         </TouchableOpacity>
         <View style={styles.con}>
-          <ScrollView style={styles.scrolView}>
+          <ScrollView contentContainerStyle={styles.scrolView}>
             {RenderCompenent != 0 ? RenderCompenent : <Text>Loading...</Text>}
           </ScrollView>
         </View>
       </ImageBackground>
+      </View>
       <NavBar
         isExpert={route.params.isExpert}
         userID={route.params.userID}
@@ -385,6 +398,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignContent: "center",
     paddingHorizontal: 45,
+    alignItems:"center"
+
   },
   con: {
     marginTop: 5,
@@ -436,6 +451,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     textAlign: "center",
     marginHorizontal: 5,
+    alignItems:"center"
   },
   activ: {
     display: "flex",
@@ -459,8 +475,6 @@ const styles = StyleSheet.create({
   galleryIcon: {
     width: "80%",
     height: "80%",
-    marginRight: 0,
-    borderRadius: 0,
     textAlign: "center",
     justifyContent: "center",
     position: "absolute",
@@ -506,21 +520,21 @@ const styles = StyleSheet.create({
   },
   modal: {
     position: "absolute",
+    flex:1,
     top: 100,
-    left: 18,
     width: 325,
     height: 450,
     backgroundColor: "#9EB98B",
     zIndex: 5,
     borderRadius: 25,
     alignItems: "center",
+    justifyContent:"center",
   },
   input: {
     borderWidth: 2,
     padding: 5,
-    paddingLeft: 63,
     fontSize: 18,
-    textAlign: "right",
+    textAlign: "center",
     margin: 10,
     backgroundColor: "#ffffff80",
     marginBottom: 15,
@@ -550,7 +564,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
     position: "relative",
     top: 15,
-    left: 285,
+    //left: 285,
     marginBottom: 15,
   },
   btntitle: {

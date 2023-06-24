@@ -3,7 +3,6 @@ import { StyleSheet, Dimensions } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
     alignItems: "center",
     justifyContent: "center",
     width: 390,
@@ -31,13 +30,19 @@ export default StyleSheet.create({
   },
   pickerItem: {
     position: "absolute",
-    left: 1,
-    right: 0,
     // fontWeight: 400,
     fontSize: 18,
     lineHight: 24,
     textAlign: "right",
     color: "#7C7C7C",
+    height: 40,
+    width: '100%',
+    marginTop: 10,
+    marginBottom: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingLeft: 10,
   },
 
   containerIn: {
@@ -59,7 +64,6 @@ export default StyleSheet.create({
   Textinput: {
     width: 350,
     height: 40,
-    // left: 20,
     backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -68,7 +72,8 @@ export default StyleSheet.create({
     borderRadius: 15,
     fontSize: 16,
     marginBottom: 25,
-    textAlign:'center',
+    textAlign:"center"
+
   },
   back: {
     position: "absolute",
@@ -180,6 +185,7 @@ export default StyleSheet.create({
     marginTop: 10,
     flexDirection: "row",
     alignItems: "center",
+    borderRadius: 15
   },
   
   pressable: {
@@ -229,5 +235,16 @@ width:"90%",
 padding:5,
 maxWidth:"90%",
 scrollX:false,
+},
+
+searchResultsIcon:{
+  width:40,
+  aspectRatio:1,
+  margin:5
+},
+iconView:{
+  flexDirection:"row",
+  alignItems:"center",
+  justifyContent:"center"
 }
 });

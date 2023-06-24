@@ -154,7 +154,7 @@ export default function UserIdentification({ route, navigation }) {
           <TouchableOpacity
             style={styles.back}
             onPress={() =>
-              navigation.navigate("UserProfile", {
+              navigation.goBack({
                 isExpert: route.params.isExpert,
                 userID: route.params.userId,
               })

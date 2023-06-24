@@ -140,7 +140,7 @@ export default function UserProduct({ route, navigation }) {
             <TouchableOpacity
               style={styles.back}
               onPress={() =>
-               navigation.navigate("Shop", {
+               navigation.goBack({
                 isExpert: route.params.isExpert,
                 userId: userId,
               })

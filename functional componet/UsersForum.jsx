@@ -36,11 +36,9 @@ export default function UsersForum({ route, navigation }) {
       })
       .then(
         (result) => {
-          ForumId = result;
           if (forum == null) {
-            setforum(ForumId);
+            setforum(result);
           }
-          console.log("Forum = ", ForumId);
         },
         (error) => {
           console.log("err post=", error);
@@ -49,7 +47,6 @@ export default function UsersForum({ route, navigation }) {
   }, []);
 
   if (forum != null) {
-    console.log("asdadsd");
     ForumMap = forum.map((st) => {
       return (
         <View
@@ -69,7 +66,7 @@ export default function UsersForum({ route, navigation }) {
         >
           <View style={{ flexDirection: "column", flex: 1 }}>
             <View style={{ flexDirection: "row", flex: 1 }}>
-              <Image
+              {st.photoUri==""?<Image
                 style={{
                   borderColor: "black",
                   borderWidth: 0.2,
@@ -80,7 +77,18 @@ export default function UsersForum({ route, navigation }) {
                   marginTop: 10,
                 }}
                 source={ForumIcon}
-              />
+              />:<Image
+                style={{
+                  borderColor: "black",
+                  borderWidth: 0.2,
+                  width: 110,
+                  height: 90,
+                  marginLeft: 5,
+                  marginRight: 10,
+                  marginTop: 10,
+                }}
+                source={{uri:`https://proj.ruppin.ac.il/cgroup41/prod/uploadedFiles/${st.photoUri}`}}
+              />}
               <View
                 style={{
                   flexDirection: "column",
@@ -101,11 +109,10 @@ export default function UsersForum({ route, navigation }) {
                       fontWeight: "bold",
                     }}
                   >
-                    {" "}
-                    {st.title}
+                    {st.socialForumName}
                   </Text>
                   <Text style={{ textAlign: "left", flex: 1 }}>
-                    {st.description}
+                     {st.socialForumDiscription}
                   </Text>
                 </ScrollView>
 
@@ -124,10 +131,10 @@ export default function UsersForum({ route, navigation }) {
                 onPress={() => {
                   console.log(st)
                   
-                // navigation.navigate("ForumPage", {
-                //   user: route.params,
-                //   forum: st.forumId,
-                // });
+                 navigation.navigate("ForumPage", {
+                   user: route.params,
+                   forum: st,
+                 });
               }}
                 style={{
                   width: "75%",
@@ -166,7 +173,7 @@ export default function UsersForum({ route, navigation }) {
             <TouchableOpacity
               style={styles.back}
               onPress={() =>
-                navigation.navigate("UserProfile", {
+                navigation.goBack({
                   isExpert: route.params.isExpert,
                   userID: route.params.userId,
                 })
@@ -176,6 +183,7 @@ export default function UsersForum({ route, navigation }) {
                 style={styles.iconBack}
                 name="return-up-back-outline"
               ></Ionicons>
+              
             </TouchableOpacity>
             <View
               style={{

@@ -214,8 +214,8 @@ export default function UserProfile({ route, navigation }) {
 
   if (user != null) {
     return (
-      <KeyboardAvoidingView>
-        <View>
+      <KeyboardAvoidingView >
+        <View >
           <ImageBackground
             source={BackGroundImageLocal}
             // style={styles.backgroundImage}
@@ -303,7 +303,7 @@ export default function UserProfile({ route, navigation }) {
                 color="#77a068"
               ></Ionicons>
             </TouchableOpacity>
-            <View style={{ marginTop: 170 }}>
+            <View style={{ marginTop: 170, alignItems:"center"}}>
               <TouchableOpacity
                 style={styles.btnStyleProfile}
                 onPress={() =>

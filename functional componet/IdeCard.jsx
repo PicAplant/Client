@@ -40,9 +40,9 @@ export default function IdeCard(props) {
   
             <Text style={{ marginTop: 10 }}>זוהה בתאריך: {props.TimeStamp}</Text>
   
-            <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <View style={{ flexDirection: "row", marginTop: 0 }}>
               <Ionicons
-                style={{ marginTop: 5 }}
+                style={{ marginTop: 0 }}
                 name="location-outline"
               ></Ionicons>
               <Text style={{ textDecorationLine: "underline" }}>מיקום</Text>
@@ -82,9 +82,9 @@ export default function IdeCard(props) {
   
             <Text style={{ marginTop: 10 }}>זוהה בתאריך:</Text>
   
-            <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <View style={{ flexDirection: "row", marginTop: 0 }}>
               <Ionicons
-                style={{ marginTop: 5 }}
+                style={{ marginTop: 0 }}
                 name="location-outline"
               ></Ionicons>
               <Text style={{ textDecorationLine: "underline" }}>מיקום</Text>
@@ -102,7 +102,7 @@ export default function IdeCard(props) {
             </View>
           </View>
         </View>
-        <View style={styles.answerWrap}>
+        <View style={[styles.answerWrap,{alignItems:"center"}]}>
           <Text style={styles.answerText}><Text style={{textDecorationLine: 'underline'}}>תשובה ממשתמש מומחה: </Text> {props.Answer.expertAnswer} </Text>
         </View>
       </View>
@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#90AE95",
     width: 350,
     height: 155,
-    opacity: 0.6,
     borderRadius: 20,
     borderColor: "#3F493A",
     borderWidth: 1,
@@ -139,7 +138,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#90AE95",
     width: 350,
     height: 240,
-    opacity: 0.6,
     borderRadius: 20,
     borderColor: "#3F493A",
     borderWidth: 1,
@@ -167,7 +165,7 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderColor:'#3F493A',
     backgroundColor: "#E0E0E0",
-    opacity: 0.75,
+    opacity: 0.6,
     padding:10,
     borderRadius:20,
     borderBottomRightRadius:0,
@@ -178,6 +176,5 @@ const styles = StyleSheet.create({
   answerText:{
    color:'#000',
    fontSize:15,
-   opacity:1,
   }
 });
