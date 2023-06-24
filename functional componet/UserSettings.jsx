@@ -1,5 +1,4 @@
-//all
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   KeyboardAvoidingView,
   Image,
@@ -9,28 +8,22 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableHighlight,
-  SafeAreaView,
-  ScrollView,
-  Button,
   I18nManager,
-  StyleSheet,
   Alert,
+  Modal
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import styles from "../App.module.js";
-import NavBar from "./navBar.jsx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StatusBar } from "expo-status-bar";
 import { Picker } from "@react-native-picker/picker";
 import NotificationPush from "./NotificationPush.jsx";
 const apiUrl = "https://proj.ruppin.ac.il/cgroup41/prod/UpdateSettingsUser";
 const LeafIcon = require("../assets/leaf_money_icon.png");
-const ForumIcon = require("../assets/Icon_navbar_forums.png");
-const ShopIcon = require("../assets/Shop_icon.png");
 const BackGroundImageLocal = require("../assets/bg_userProfile.png");
 import { StackActions } from "@react-navigation/native";
 const BackIcon = require("../assets/back.png");
 const SaveIcon = require("../assets/save.png");
+const comunityOptions=["בחר קהילה","לקט","מדריך טיולים","מגדל","חובב טבע"]
 
 I18nManager.forceRTL(true);
 I18nManager.allowRTL(true);
@@ -39,12 +32,21 @@ export default function UserSetting({ route, navigation }) {
   console.log("UserSettings Route---->", route.params);
   const { greeting, pickImage, load, profileImage, user, profilePhotoAs } =
     route.params;
-  const [comunity, setComunity] = useState("");
+  const [comunity, setComunity] = useState(user.userType);
   const [password, setPassword] = useState("");
-  const [fullname, setFullname] = useState("");
-
+  const [fullname, setFullname] = useState(user.userName);
   const [CheckValdPassword, setCheckValdPassword] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(true);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const selectOption = (option) => {
+    setIsOpen(false);
+    setComunity(option)
+  };
 
   const clearAll = () => {
     setComunity("");
@@ -55,10 +57,6 @@ export default function UserSetting({ route, navigation }) {
     let re = /\S+@\S+\.\S+/;
     let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
-    if (comunity == "") {
-      Alert.alert("יש לבחור קהילה");
-      return;
-    }
 
     if (fullname == "" || password == "") {
       Alert.alert("יש לבדוק תקינות הכנסת נתונים");
@@ -140,7 +138,7 @@ export default function UserSetting({ route, navigation }) {
             <TouchableOpacity
               style={styles.back}
               onPress={() =>
-                navigation.navigate("UserProfile", {
+                navigation.goBack({
                   isExpert: route.params.isExpert,
                   userID: route.params.user.userId,
                 })
@@ -216,17 +214,17 @@ export default function UserSetting({ route, navigation }) {
               >
                 עריכת פרטים אישיים
               </Text>
-              <Text style={{ fontWeight: "bold" }}>שם מלא</Text>
+              <Text style={{ fontWeight: "bold" }}>שם משתמש</Text>
               <TextInput
                 style={styles.Textinput}
                 value={fullname}
                 onChangeText={(fullText) => setFullname(fullText)}
               />
               <Text style={{ fontWeight: "bold" }}>סיסמה</Text>
-              <View>
+              <View style={{alignItems:"center"}}>
                 <TextInput
                   label="Password"
-                  style={[styles.Textinput, styles.TextinputLeft]}
+                  style={styles.Textinput}
                   secureTextEntry={passwordVisible}
                   value={password}
                   onChangeText={(passText) => setPassword(passText)}
@@ -253,24 +251,48 @@ export default function UserSetting({ route, navigation }) {
                 <Text style={{ fontWeight: "bold", textAlign: "center" }}>
                   בחר קהילה
                 </Text>
-                <View style={styles.list}>
-                  <Picker
-                    style={styles.pickerItem}
-                    value={comunity}
-                    selectedValue={comunity}
-                    onValueChange={(comunityText) => setComunity(comunityText)}
-                  >
-                    <Picker.Item
-                      style={{ textAlign: "center" }}
-                      label="בחר קהילה"
-                      value=""
-                    />
-                    <Picker.Item label="לקט" value="לקט" />
-                    <Picker.Item label="מדריך טיולים" value="מדריך טיולים" />
-                    <Picker.Item label="מגדל" value="מגדל" />
-                    <Picker.Item label="חובב טבע" value="חובב טבע" />
-                  </Picker>
-                </View>
+
+                <TouchableOpacity style={[{ padding: 10},styles.Textinput]} onPress={toggleDropdown}>
+                   <Text style={{textAlign:"center"}}>{comunity || "בחר קהילה"}</Text>
+                   <Ionicons style={{
+                    position: "absolute",
+                    top: 3,
+                    left: 30,
+                    fontSize: 30,
+                    textAlign: "left",
+                  }}
+                   name={isOpen ? "chevron-up" : "chevron-down"}
+                   size={20}
+                   color="black"
+                   />
+                </TouchableOpacity>
+
+      <Modal visible={isOpen} transparent={true}>
+        <TouchableOpacity
+           style={{ flex: 1, justifyContent:"center"
+           }}
+          onPress={() => setIsOpen(false)}
+        >
+          <View
+            style={{
+              backgroundColor: "white",
+              borderRadius: 4,
+              margin: 20,
+              padding: 10
+            }}
+          >
+            {comunityOptions.map((option) => (
+              <TouchableOpacity
+                key={option}
+                style={{ paddingVertical: 25}}
+                onPress={() => selectOption(option)}
+              >
+                <Text style={{textAlign:"center",fontSize:22}}>{option}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </TouchableOpacity>
+      </Modal>
               </View>
               <TouchableOpacity
                 style={styles.btnStyleSettings}
@@ -278,8 +300,7 @@ export default function UserSetting({ route, navigation }) {
               >
                 <View style={styles.ViewInButton}>
                   <Image style={styles.iconIdentification} source={SaveIcon} />
-                  <Text style={{ fontSize: 25, textAlign: "center" }}>
-                    {" "}
+                  <Text style={{ fontSize: 25, textAlign: "center"}}>
                     שמור שינויים
                   </Text>
                 </View>
@@ -291,7 +312,6 @@ export default function UserSetting({ route, navigation }) {
                 <View style={styles.ViewInButton}>
                   <Image style={styles.iconIdentification} source={BackIcon} />
                   <Text style={{ fontSize: 25, textAlign: "center" }}>
-                    {" "}
                     נקה שינויים
                   </Text>
                 </View>
