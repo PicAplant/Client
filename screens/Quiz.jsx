@@ -13,6 +13,7 @@ import Question from "./Question";
 const BG = require("./images/bg.png");
 
 export default function Quiz({ route, navigation }) {
+  console.log(route.params)
   const { quizName, Level,userId } = route.params;
   const [quizD, setQuizD] = useState({ name: quizName, level: Level });
   const [quiz, setQuiz] = useState(0);

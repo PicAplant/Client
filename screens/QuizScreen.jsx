@@ -7,7 +7,7 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
-  Alert,
+  Alert,Modal
 } from "react-native";
 import React, { useState,useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
@@ -15,6 +15,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BlurView } from "expo-blur";
 
 
 import Quizquest from "./Quiz";
@@ -31,10 +32,19 @@ let userAsync;
 let localuser ;
 export default function QuizScreen({ navigation,route }) {
   const [quizName, setQuizName] = useState("");
-  const [selectedValue, setSelectedValue] = useState("-1");
+  const [selectedValue, setSelectedValue] = useState("בחר רמה");
   const Stack = createNativeStackNavigator();
   const [localUser, setLocalUser] = useState(null);
+  const dificultyOptions=["בחר רמה","קל","קשה"]
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
+  const selectOption = (option) => {
+    setIsOpen(false);
+    setSelectedValue(option)
+  };
 
   useEffect(() => {
     console.log('Quiz Screen route--->',route.params)
@@ -60,7 +70,54 @@ export default function QuizScreen({ navigation,route }) {
   const List = () => {
     return (
       <View style={styles.list}>
-        <Picker
+
+<TouchableOpacity style={[{ padding: 10},styles.Textinput]} onPress={toggleDropdown}>
+                   <Text style={{textAlign:"center"}}>{selectedValue || "בחר רמה"}</Text>
+                   <Ionicons style={{
+                    position: "absolute",
+                    top: 3,
+                    left: 30,
+                    fontSize: 30,
+                    textAlign: "left",
+                  }}
+                   name={isOpen ? "chevron-up" : "chevron-down"}
+                   size={20}
+                   color="black"
+                   />
+                </TouchableOpacity>
+
+      <Modal visible={isOpen} transparent={true}>
+      <BlurView
+          style={styles.blurContainer}
+          intensity={100}
+        >
+        <TouchableOpacity
+           style={{ flex: 1, justifyContent:"center"
+           }}
+          onPress={() => setIsOpen(false)}
+        >
+          <View
+            style={{
+              backgroundColor: "white",
+              borderRadius: 4,
+              margin: 20,
+              padding: 10
+            }}
+          >
+            {dificultyOptions.map((option) => (
+              <TouchableOpacity
+                key={option}
+                style={{ paddingVertical: 25,margin:50,marginBottom:0,marginTop:0}}
+                onPress={() => selectOption(option)}
+              >
+                <Text style={{textAlign:"center",fontSize:22}}>{option}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </TouchableOpacity>
+      </BlurView>
+      </Modal>
+        {/* <Picker
           style={styles.pickerItem}
           selectedValue={selectedValue}
           onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
@@ -68,7 +125,7 @@ export default function QuizScreen({ navigation,route }) {
           <Picker.Item label="בחר רמה" value="-1" />
           <Picker.Item label="קל" value="1" />
           <Picker.Item label="קשה" value="2" />
-        </Picker>
+        </Picker> */}
       </View>
     );
   };
@@ -89,12 +146,21 @@ export default function QuizScreen({ navigation,route }) {
                 //need to pass user id
 
                 console.log(quizName, selectedValue,userId);
-                if (selectedValue!='-1' && quizName!='' && userId!=undefined) {
-                  navigation.navigate("Quizquest", {
+                if (selectedValue!='בחר רמה' && quizName!='' && userId!=undefined) {
+                  if(selectedValue=="קל"){
+                    navigation.navigate("Quizquest", {
                     quizName: quizName,
-                    Level: selectedValue,
+                    Level: 1,
                     userId:userId,
                   });
+                  }
+                  if(selectedValue=="קשה"){
+                  navigation.navigate("Quizquest", {
+                    quizName: quizName,
+                    Level: 2,
+                    userId:userId,
+                  });
+                  }
                 }
                 else{
                   Alert.alert('נא הכנס את כל הפרטים')
@@ -211,5 +277,10 @@ const styles = StyleSheet.create({
     lineHight: 24,
     textAlign: "right",
     color: "#7C7C7C",
+  },
+  blurContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

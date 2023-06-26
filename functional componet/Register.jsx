@@ -25,7 +25,7 @@ import UserProfile from "./UserProfile";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RadioButton from "./RadioButton";
-
+import { BlurView } from "expo-blur";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -34,6 +34,7 @@ export default function Register({ navigation }) {
   const appIcon = require("../assets/icon_title.png");
 
   apiUrl = "https://proj.ruppin.ac.il/cgroup41/prod/Registrations";
+  const comunityOptions=["בחר קהילה","לקט","מדריך טיולים","מגדל","חובב טבע"]
 
   const [isSelected, setSelection] = useState(false);
 
@@ -50,6 +51,15 @@ export default function Register({ navigation }) {
   const [token, setToken] = useState("");
   const [terms, setTerms] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const selectOption = (option) => {
+    setIsOpen(false);
+    setComunity(option)
+  };
 
   const [request, response, promtAsync] = Google.useAuthRequest({
     clientId:
@@ -299,26 +309,59 @@ setModalVisible(true)
               ) : (
                 ""
               )}
-
-              <Text style={{ textAlign:'center', fontWeight: "bold" }}>בחר קהילה</Text>
-              <View style={styles.list}>
-                <Picker
-                  style={styles.pickerItem}
-                  selectedValue={comunity}
-                  onValueChange={(comunityText) => setComunity(comunityText)}
-                >
-                  <Picker.Item label="בחר קהילה" value="" />
-                  <Picker.Item label="לקט" value="לקט" />
-                  <Picker.Item label="מדריך טיולים" value="מדריך טיולים" />
-                  <Picker.Item label="מגדל" value="מגדל" />
-                  <Picker.Item label="חובב טבע" value="חובב טבע" />
-                </Picker>
+              <TouchableOpacity style={[{ padding: 10},styles.Textinput]} onPress={toggleDropdown}>
+                   <Text style={{textAlign:"center"}}>{comunity || "בחר קהילה"}</Text>
+                   <Ionicons style={{
+                    position: "absolute",
+                    top: 3,
+                    left: 30,
+                    fontSize: 30,
+                    textAlign: "left",
+                  }}
+                   name={isOpen ? "chevron-up" : "chevron-down"}
+                   size={20}
+                   color="black"
+                   />
+                </TouchableOpacity>
+              <Modal visible={isOpen} transparent={true}>
+              <BlurView
+          style={styles.blurContainer}
+          intensity={100}
+        >
+               <TouchableOpacity
+               style={{ flex: 1, justifyContent:"center"
+                       }}
+               onPress={() => setIsOpen(false)}
+               >
+               <View
+                style={{
+                backgroundColor: "white",
+                borderRadius: 4,
+                margin: 20,
                 
-              </View>
+               }}
+               >
+              
+                {comunityOptions.map((option) => (
+              <TouchableOpacity
+                key={option}
+                style={{ paddingVertical: 25,margin:50,marginBottom:0,marginTop:0}}
+                onPress={() => selectOption(option)}
+              >
+                <Text style={{textAlign:"center",fontSize:22}}>{option}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </TouchableOpacity>
+        </BlurView>
+
+      </Modal>
+
               <View style={{ flexDirection: "row" }}>
 <RadioButton Size={7} Brcolor={'black'} Label={''} TranferInfo={Example}></RadioButton>
-<Text>לאישור</Text><Text style={{color:'blue',textDecorationLine: "underline",}} onPress={()=>ModalTerms()}> תנאי השימוש</Text>
+<Text> לאישור  </Text><Text style={{color:'blue',textDecorationLine: "underline",}} onPress={()=>ModalTerms()}> תנאי השימוש</Text>
 <View style={stylesM.centeredView}>
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -327,6 +370,10 @@ setModalVisible(true)
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
+                      <BlurView
+          style={styles.blurContainer}
+          intensity={100}
+        >
         <View style={stylesM.centeredView}>
           <ScrollView
               contentContainerStyle={stylesM.modalView}>
@@ -361,6 +408,7 @@ setModalVisible(true)
             </Pressable>
           </ScrollView>
         </View>
+        </BlurView>
       </Modal>
       {/* <Pressable
         style={[stylesM.button, stylesM.buttonOpen]}
@@ -370,15 +418,8 @@ setModalVisible(true)
     </View>
 </View>
 
-              {/* <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={isSelected}
-          onValueChange={setSelection}
-        />
-        <Text style={styles.label}>קראתי ואני מסכים לתנאי השימוש</Text>
-      </View> */}
+
             </View>
-            {/* go to user profile for now and after go to home page (what guy do) */}
             <TouchableOpacity
               style={styles.btnStyleLogin}
               onPress={RegisterAndLogin}
@@ -427,6 +468,7 @@ const stylesM = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
+    
     
   },
   modalView: {

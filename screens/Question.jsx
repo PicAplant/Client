@@ -31,7 +31,7 @@ export default function Question(props) {
     // console.log(props.questionBody.length,props.questionBody)
     if (props.cat == "רב-ברירה") {
       return (
-        <View>
+        <View style={{alignItems:"center"}}>
           <Text style={styles.title}>שאלה: {props.questNumber}</Text>
           <View
             style={
@@ -411,8 +411,8 @@ const styles = StyleSheet.create({
   title: {
     textDecorationLine: "underline",
     fontSize: 16,
-    left: 12,
     marginTop: 15,
+    
     // fontWeight: 700,
   },
 

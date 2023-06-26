@@ -24,6 +24,7 @@ import { StackActions } from "@react-navigation/native";
 const BackIcon = require("../assets/back.png");
 const SaveIcon = require("../assets/save.png");
 const comunityOptions=["בחר קהילה","לקט","מדריך טיולים","מגדל","חובב טבע"]
+import { BlurView } from "expo-blur";
 
 I18nManager.forceRTL(true);
 I18nManager.allowRTL(true);
@@ -268,6 +269,10 @@ export default function UserSetting({ route, navigation }) {
                 </TouchableOpacity>
 
       <Modal visible={isOpen} transparent={true}>
+      <BlurView
+          style={styles.blurContainer}
+          intensity={100}
+        >
         <TouchableOpacity
            style={{ flex: 1, justifyContent:"center"
            }}
@@ -284,7 +289,7 @@ export default function UserSetting({ route, navigation }) {
             {comunityOptions.map((option) => (
               <TouchableOpacity
                 key={option}
-                style={{ paddingVertical: 25}}
+                style={{ paddingVertical: 25,margin:50,marginBottom:0,marginTop:0}}
                 onPress={() => selectOption(option)}
               >
                 <Text style={{textAlign:"center",fontSize:22}}>{option}</Text>
@@ -292,6 +297,7 @@ export default function UserSetting({ route, navigation }) {
             ))}
           </View>
         </TouchableOpacity>
+      </BlurView>
       </Modal>
               </View>
               <TouchableOpacity

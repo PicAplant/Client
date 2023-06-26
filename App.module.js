@@ -214,6 +214,7 @@ export default StyleSheet.create({
     fontSize: 16,
   },  
   autocomplete: {
+    top:25,
   alignSelf: "stretch",
   height: 50,
   margin: 20,
@@ -246,5 +247,10 @@ iconView:{
   flexDirection:"row",
   alignItems:"center",
   justifyContent:"center"
-}
+},
+blurContainer: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+},
 });
