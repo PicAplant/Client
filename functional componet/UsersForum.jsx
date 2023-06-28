@@ -23,6 +23,7 @@ export default function UsersForum({ route, navigation }) {
   console.log(userId, " 15 ");
   const [forum, setforum] = useState(null);
   useEffect(() => {
+    console.log("26 - route params - userForum ",route.params)
     fetch(`https://proj.ruppin.ac.il/cgroup41/prod/getForumUser/${userId}`, {
       method: "GET",
       headers: new Headers({
@@ -206,7 +207,6 @@ export default function UsersForum({ route, navigation }) {
               <View style={{ height: 50 }}></View>
             </ScrollView>
           </ImageBackground>
-          <NavBar></NavBar>
         </View>
       </KeyboardAvoidingView>
     );
