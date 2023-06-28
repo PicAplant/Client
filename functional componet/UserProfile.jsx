@@ -17,6 +17,8 @@ import { StackActions } from "@react-navigation/native";
 import NavBar from "./navBar";
 export default function UserProfile({ route, navigation }) {
   //  let user=route.params;
+  console.log("UserProfile Route---->", route.params);
+
   const BackGroundImageLocal = require("../assets/bg_userProfile.png");
   const HomePageIcon = require("../assets/logo_without_title.png");
   const ForumIcon = require("../assets/Icon_navbar_forums.png");
