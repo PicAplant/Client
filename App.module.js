@@ -155,6 +155,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    paddingLeft:20,
+    paddingRight:20
   },
   iconIdentification: {
     height: 40,
@@ -185,7 +187,7 @@ export default StyleSheet.create({
     marginTop: 10,
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 15
+    borderRadius: 15,
   },
   
   pressable: {
@@ -206,7 +208,6 @@ export default StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5,
     margin: 2,
-    marginBottom:100
 
   },
   infoText: {
