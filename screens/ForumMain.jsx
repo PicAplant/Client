@@ -40,9 +40,7 @@ export default function ForumMain({ navigation, route }) {
   const apiToUpload = "https://proj.ruppin.ac.il/cgroup41/prod/api/Upload";
   const apiToTable = "https://proj.ruppin.ac.il/cgroup41/prod/addPhoto";
 
-
   useEffect(() => {
-
     console.log("onload in Forum Main");
     fetch(api, {
       method: "GET",
@@ -334,7 +332,9 @@ export default function ForumMain({ navigation, route }) {
           </View>
           <View style={styles.content}>
             <Text style={styles.title}>{forum.socialForumName}</Text>
-            <Text style={styles.disc}>{scalbleContent(forum.socialForumDiscription,78)}</Text>
+            <Text style={styles.disc}>
+              {scalbleContent(forum.socialForumDiscription, 78)}
+            </Text>
             <Text style={styles.activtxt}>
               נוצר בתאריך: {forum.socialForumCreatedAt.slice(0, 9)}
             </Text>
@@ -360,24 +360,22 @@ export default function ForumMain({ navigation, route }) {
 
   return (
     <>
-    <View>
-      <ImageBackground
-        style={{ width: "100%", height: "100%", zIndex: -1}}
-        source={bg}
-      >
-        {Modal === true ? <ModalCompenent /> : ""}
-        <TouchableOpacity
-          style={styles.btnadd}
-          onPress={() => {
-            setModal((prev) => !prev);
-          }}
-        >
-          <Text style={styles.btntitle}>{Modal === true ? "X" : "+"}</Text>
-        </TouchableOpacity>
-        <View style={styles.con}>
-          <ScrollView contentContainerStyle={styles.scrolView}>
-            {RenderCompenent != 0 ? RenderCompenent : <Text>Loading...</Text>}
-          </ScrollView>
+      <ImageBackground style={{ width: "100%", height: "100%" }} source={bg}>
+        <View style={{ flexDirection: "column", alignContent: "center",paddingHorizontal:50,marginBottom:80 }}>
+          {Modal === true ? <ModalCompenent /> : ""}
+          <TouchableOpacity
+            style={styles.btnadd}
+            onPress={() => {
+              setModal((prev) => !prev);
+            }}
+          >
+            <Text style={styles.btntitle}>{Modal === true ? "X" : "+"}</Text>
+          </TouchableOpacity>
+          <View style={styles.con}>
+            <ScrollView style={styles.scrolView}>
+              {RenderCompenent != 0 ? RenderCompenent : <Text>Loading...</Text>}
+            </ScrollView>
+          </View>
         </View>
       </ImageBackground>
       </View>
@@ -405,6 +403,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
     // marginHorizontal: 15,
     marginBottom: 150,
+    flexDirection: "column",
+    alignItems: "center",
   },
   ForumCard: {
     backgroundColor: "#EBFDEB75",

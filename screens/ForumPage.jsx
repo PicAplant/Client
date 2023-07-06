@@ -354,7 +354,7 @@ export default function ForumPage({ navigation, route }) {
             </View>
           </View>
           <View style={styles.content}>
-            <Text textAlign="justify">{TheForum.socialForumDiscription}</Text>
+            <Text style={{textAlign:'center'}}>{TheForum.socialForumDiscription}</Text>
           </View>
           <View style={styles.Col}>
             <TouchableOpacity

@@ -1,5 +1,6 @@
 //new
 import React, { useState } from "react";
+import React, { useState } from "react";
 //import Unorderedlist from 'react-native-unordered-list';
 import {
   Text,
@@ -8,9 +9,9 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
   Image,
-  ScrollView, 
+  ScrollView,
   TouchableOpacity,
-  Pressable
+  Pressable,
 } from "react-native";
 import NavBar from "../functional componet/navBar";
 import BackGroundImageLocal from "../assets/bg_userProfile.png";

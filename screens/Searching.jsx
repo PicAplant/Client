@@ -39,7 +39,8 @@ export default function Searching(props) {
   return (
 <View
 
- style={{width:"100%",paddingBottom:20}}>
+ style={filteredPlants.length>6?{width:'100%',marginBottom:140}:{width:'100%'}}>
+  {console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',filteredPlants.length)}
     <TextInput style={styles.autocomplete}
       placeholder="חפש צמח"
       value={input}
