@@ -117,15 +117,6 @@ export default function QuizScreen({ navigation,route }) {
         </TouchableOpacity>
       </BlurView>
       </Modal>
-        {/* <Picker
-          style={styles.pickerItem}
-          selectedValue={selectedValue}
-          onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-        >
-          <Picker.Item label="בחר רמה" value="-1" />
-          <Picker.Item label="קל" value="1" />
-          <Picker.Item label="קשה" value="2" />
-        </Picker> */}
       </View>
     );
   };

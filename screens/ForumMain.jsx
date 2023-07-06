@@ -378,7 +378,6 @@ export default function ForumMain({ navigation, route }) {
           </View>
         </View>
       </ImageBackground>
-      </View>
       <NavBar
         isExpert={route.params.isExpert}
         userID={route.params.userID}

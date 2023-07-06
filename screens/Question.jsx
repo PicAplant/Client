@@ -407,6 +407,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 10,
+    writingDirection:"rtl"
   },
   title: {
     textDecorationLine: "underline",

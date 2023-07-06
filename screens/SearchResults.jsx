@@ -1,7 +1,4 @@
-//new
 import React, { useState } from "react";
-import React, { useState } from "react";
-//import Unorderedlist from 'react-native-unordered-list';
 import {
   Text,
   View,
@@ -27,6 +24,7 @@ import beeIcon from "../assets/bee.png"
 export default function SearchResults({ navigation,route }) {
     const { plant,userID,isExpert,plants } =route.params;
     const [moreInfo,setMoreInfo]=useState(false);
+    const arr = []
     const navigateToSearchResults=(item)=>{
         navigation.navigate("SearchResults", {
           plant: item,
@@ -39,7 +37,7 @@ export default function SearchResults({ navigation,route }) {
         setMoreInfo((previousState) => !previousState);
         console.log(moreInfo)
       };
-
+      const similarByX=10
       const similarPlantsArray = plants.map((item) =>{
         let counter=0;
         if(item.plantName!==null&&item.plantScientificName!==plant.plantScientificName){
@@ -57,10 +55,11 @@ export default function SearchResults({ navigation,route }) {
       item.plantIsEndangered==plant.plantIsEndangered?counter+=1:""
       item.plantIsProtected==plant.plantIsProtected?counter+=1:""
       item.plantIsProvidedHoneydew==plant.plantIsProvidedHoneydew?counter+=1:""
+      counter>=similarByX?arr.push(item):""
         }
 return(
 <View>
-{counter>=10?     
+{counter>=similarByX?     
 <Pressable style={{alignItems:"center",justifyContent:"center",padding:5,width:160}} onPress={()=>{navigateToSearchResults(item)}}>
 
   {item.plantImage===null?"":<Image source={{uri: item.plantImage}}
@@ -80,7 +79,7 @@ return(
    
    <Searching plants={plants} navigateToSearchResults={navigateToSearchResults}
        />
-       <ScrollView contentContainerStyle={{alignItems:"center",paddingBottom:30}}>
+       <ScrollView contentContainerStyle={{alignItems:"center",paddingBottom:23}}>
          {plant.plantImage===null?"":<Image source={{uri: plant.plantImage}}
           style={{width: "90%",
       aspectRatio: 1,
@@ -139,9 +138,12 @@ return(
 </TouchableOpacity>
 {moreInfo&&<Text style={{writingDirection: 'rtl',maxWidth:"99%"}}>{plant.plantMoreInfo}</Text>}
   </View>
-  <View><Text style={{textAlign:"center",fontSize:24}}>צמחים בעלי מאפיינים דומים</Text>
-  <ScrollView horizontal>
-  <View style={{
+
+{arr.length>0?<Text style={{textAlign:"center",fontSize:24}}>צמחים בעלי מאפיינים דומים</Text>:""}
+
+  <>
+  {arr.length>2?<ScrollView horizontal>
+        <View style={{
           flexDirection: "row",
           justifyContent:"flex-start",
           height:200
@@ -149,8 +151,16 @@ return(
         {similarPlantsArray}
 </View>
   </ScrollView>
-  </View>
-  </ScrollView>
+  :(arr.length>0?<View style={{
+          flexDirection: "row",
+          justifyContent:"flex-start",
+          height:200
+          }}>
+          {similarPlantsArray}
+        </View>:"")}
+  </>
+
+</ScrollView>
       <NavBar
         isExpert={route.params.isExpert}
         userID={route.params.userID}
