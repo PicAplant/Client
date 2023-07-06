@@ -47,7 +47,7 @@ export default function Searching(props) {
       onChangeText={onChangeText}
       />
       {filteredPlants.length>0&&
-    <FlatList style={[styles.flatList,filteredPlants.length>10?{marginBottom:100}:""]}
+    <FlatList style={styles.flatList}
       data={filteredPlants}
       renderItem={({item}) =>(
         <TouchableOpacity style={styles.pressable} onPress={()=>{navigateToSearchResults(item)

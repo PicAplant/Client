@@ -27,7 +27,6 @@ import beeIcon from "../assets/bee.png"
 export default function SearchResults({ navigation,route }) {
     const { plant,userID,isExpert,plants } =route.params;
     const [moreInfo,setMoreInfo]=useState(false);
-    const arr = []
     const navigateToSearchResults=(item)=>{
         navigation.navigate("SearchResults", {
           plant: item,
@@ -40,10 +39,9 @@ export default function SearchResults({ navigation,route }) {
         setMoreInfo((previousState) => !previousState);
         console.log(moreInfo)
       };
-const similarByX=10
+
       const similarPlantsArray = plants.map((item) =>{
         let counter=0;
-        
         if(item.plantName!==null&&item.plantScientificName!==plant.plantScientificName){
       item.plantFamily==plant.plantFamily?counter+=1:""
       item.plantNumOfPetals==plant.plantNumOfPetals?counter+=1:""
@@ -59,11 +57,10 @@ const similarByX=10
       item.plantIsEndangered==plant.plantIsEndangered?counter+=1:""
       item.plantIsProtected==plant.plantIsProtected?counter+=1:""
       item.plantIsProvidedHoneydew==plant.plantIsProvidedHoneydew?counter+=1:""
-      counter>=similarByX?arr.push(item):""
-    }
+        }
 return(
 <View>
-{counter>=similarByX?     
+{counter>=10?     
 <Pressable style={{alignItems:"center",justifyContent:"center",padding:5,width:160}} onPress={()=>{navigateToSearchResults(item)}}>
 
   {item.plantImage===null?"":<Image source={{uri: item.plantImage}}
@@ -142,31 +139,22 @@ return(
 </TouchableOpacity>
 {moreInfo&&<Text style={{writingDirection: 'rtl',maxWidth:"99%"}}>{plant.plantMoreInfo}</Text>}
   </View>
-{arr.length>0?<Text style={{textAlign:"center",fontSize:24}}>צמחים בעלי מאפיינים דומים</Text>:""}
-
-  <>
-  {arr.length>2?<ScrollView horizontal>
-        <View style={{
+  <View><Text style={{textAlign:"center",fontSize:24}}>צמחים בעלי מאפיינים דומים</Text>
+  <ScrollView horizontal>
+  <View style={{
           flexDirection: "row",
           justifyContent:"flex-start",
           height:200
           }}>
-          {similarPlantsArray}
-        </View>  
-      </ScrollView>:(arr.length>0?<View style={{
-          flexDirection: "row",
-          justifyContent:"flex-start",
-          height:200
-          }}>
-          {similarPlantsArray}
-        </View>:"")}
-  </>
-
-</ScrollView>
-<NavBar
-  isExpert={route.params.isExpert}
-  userID={route.params.userID}
-></NavBar>
+        {similarPlantsArray}
+</View>
+  </ScrollView>
+  </View>
+  </ScrollView>
+      <NavBar
+        isExpert={route.params.isExpert}
+        userID={route.params.userID}
+      ></NavBar>
    
          </SafeAreaView>
          </ImageBackground>

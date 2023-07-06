@@ -133,7 +133,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 5,
     paddingBottom:55,
-    opacity:0.7
   },
   CardConAn: {
     backgroundColor: "#90AE95",
