@@ -2,8 +2,8 @@
   "expoServerPort": 19000,
   "packagerPort": 19000,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://vzfhosm.anonymous.client1.exp.direct",
+  "packagerNgrokUrl": "https://vzfhosm.anonymous.client1.exp.direct",
+  "ngrokPid": 25444,
   "webpackServerPort": null
 }

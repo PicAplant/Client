@@ -33,9 +33,9 @@ export default function UserIdentification({ route, navigation }) {
   const GoodBestBar = require("../assets/75-100.png");
 
   let userId = route.params.userId;
-  let isExpert=route.params.isExpert
+  let isExpert = route.params.isExpert;
   let identibyId;
-  console.log('useridefication Route----->',route.params)
+  console.log("useridefication Route----->", route.params);
 
   let templist = [];
   let identiMap;
