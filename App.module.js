@@ -11,11 +11,11 @@ export default StyleSheet.create({
   containerReg: {
     // position: "absolute",
     // width: 390,
-    alignItems:'center',
+    alignItems: "center",
     height: 729,
     left: 0,
     top: 205,
-    marginTop:35,
+    marginTop: 35,
   },
   list: {
     borderColor: "#3F493A",
@@ -25,8 +25,6 @@ export default StyleSheet.create({
     borderRadius: 22,
     height: 50,
     marginBottom: 15,
-
-    
   },
   pickerItem: {
     position: "absolute",
@@ -36,10 +34,10 @@ export default StyleSheet.create({
     textAlign: "right",
     color: "#7C7C7C",
     height: 40,
-    width: '100%',
+    width: "100%",
     marginTop: 10,
     marginBottom: 10,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 5,
     paddingLeft: 10,
@@ -49,7 +47,7 @@ export default StyleSheet.create({
     // position: "absolute",
     // width: 390,
     height: 729,
-    alignItems:'center',
+    alignItems: "center",
     // left: 0,
     top: 315,
   },
@@ -72,40 +70,35 @@ export default StyleSheet.create({
     borderRadius: 15,
     fontSize: 16,
     marginBottom: 25,
-    textAlign:"center"
-
+    textAlign: "center",
   },
   back: {
     position: "absolute",
     right: 10,
     top: 33,
-    height:50,
-    width:50,
-    zIndex:55,
-    alignItems:'center',
-    verticalAlign:'middle',
-    alignContent:'flex-end',
-    justifyContent:'center',
-
-
+    height: 50,
+    width: 50,
+    zIndex: 55,
+    alignItems: "center",
+    verticalAlign: "middle",
+    alignContent: "flex-end",
+    justifyContent: "center",
   },
 
   backSettings: {
     position: "absolute",
     right: 10,
     top: 40,
-    height:50,
-    width:50,
-    zIndex:55,
-    alignItems:'center',
-    verticalAlign:'middle',
-    alignContent:'flex-end',
-    justifyContent:'center',
-
-
+    height: 50,
+    width: 50,
+    zIndex: 55,
+    alignItems: "center",
+    verticalAlign: "middle",
+    alignContent: "flex-end",
+    justifyContent: "center",
   },
-  iconBack:{
-    fontSize:40,
+  iconBack: {
+    fontSize: 40,
   },
 
   btnStyle: {
@@ -133,12 +126,8 @@ export default StyleSheet.create({
     top: 20,
   },
   backgroundImage: {
-    position: "absolute",
-    left: 0,
-    top: 0,
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-    flex: 1,
+    width: "100%",
+    height: "100%",
   },
   logout: {
     position: "absolute",
@@ -155,8 +144,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingLeft:20,
-    paddingRight:20
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   iconIdentification: {
     height: 40,
@@ -187,72 +176,69 @@ export default StyleSheet.create({
     marginTop: 10,
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 15
+    borderRadius: 15,
   },
-  
+
   pressable: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems:"center",
-    padding:23,
-    borderColor:"#000",
-    lineHight:1,
-    borderBottomWidth:0.2,
-    margin:2,
-    backgroundColor:"#cccccc50",
-    borderRadius:20
-
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 23,
+    borderColor: "#000",
+    lineHight: 1,
+    borderBottomWidth: 0.2,
+    margin: 2,
+    backgroundColor: "#cccccc50",
+    borderRadius: 20,
   },
   flatList: {
     fontSize: 15,
     paddingTop: 5,
     paddingBottom: 15,
     margin: 2,
-
   },
   infoText: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 16,
-  },  
-  autocomplete: {
-    top:25,
-  alignSelf: "stretch",
-  height: 50,
-  margin: 20,
-  backgroundColor: "#76937B55",
-  borderColor: "lightblue",
-  borderWidth: 1,
-  textAlign:"center",
-  borderRadius:20,
-  marginTop:40,
-
   },
-  plantInfo:{
-alignItems:"baseline",
-justifyContent:"center",
-borderRadius:20,
-borderColor:"#000",
-borderWidth:1,
-margin:20,
-width:"90%",
-padding:5,
-maxWidth:"90%",
-scrollX:false,
-},
+  autocomplete: {
+    top: 15, //need to check with gilad and dor!!!!!!!!!!!
+    alignSelf: "stretch",
+    height: 50,
+    margin: 20,
+    backgroundColor: "#76937B55",
+    borderColor: "lightblue",
+    borderWidth: 1,
+    textAlign: "center",
+    borderRadius: 20,
+    marginTop: 40,
+  },
+  plantInfo: {
+    alignItems: "baseline",
+    justifyContent: "center",
+    borderRadius: 20,
+    borderColor: "#000",
+    borderWidth: 1,
+    margin: 20,
+    width: "90%",
+    padding: 5,
+    maxWidth: "90%",
+    scrollX: false,
+  },
 
-searchResultsIcon:{
-  width:40,
-  aspectRatio:1,
-  margin:5
-},
-iconView:{
-  flexDirection:"row",
-  alignItems:"center",
-  justifyContent:"center"
-},
-blurContainer: {
-  flex: 1,
-  justifyContent: "center",
-  alignItems: "center",
-},
+  searchResultsIcon: {
+    width: 40,
+    aspectRatio: 1,
+    margin: 5,
+  },
+  iconView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  blurContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

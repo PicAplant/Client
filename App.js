@@ -33,9 +33,12 @@ import ForumMain from "./screens/ForumMain";
 import ForumPage from "./screens/ForumPage";
 import Shop from "./functional componet/Shop";
 import UserProduct from "./functional componet/UserProduct";
+import { LogBox } from "react-native";
+
 // import ReplayScreen from "./screens/replayScreen";
 I18nManager.forceRTL(true);
 I18nManager.allowRTL(true);
+
 //web:222431351949-u9t6ooea1k530kli2d6tiqbk6cndm78n.apps.googleusercontent.com
 //ios:222431351949-bf16s29kjk5uhqaamuf76bhln3o9ulq1.apps.googleusercontent.com
 //android:222431351949-h1ulm3jsa1t5cmghgghtppfip4j67p6t.apps.googleusercontent.com
@@ -52,6 +55,11 @@ Notifications.setNotificationHandler({
 });
 export default function App() {
   useEffect(() => {
+    // Ignore log notification by message
+    LogBox.ignoreLogs(["Warning: ..."]);
+
+    //Ignore all log notifications
+    LogBox.ignoreAllLogs();
     I18nManager.forceRTL(true);
     I18nManager.allowRTL(true);
     //handle push for display on client phone
@@ -137,7 +145,7 @@ export default function App() {
           component={UserIdentification}
           options={{ headerShown: false }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="Shop"
           component={Shop}
           options={{ headerShown: false }}
